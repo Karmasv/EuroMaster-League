@@ -106,6 +106,17 @@ process.on('unhandledRejection', console.error);
 console.log('🚀 Conectando bot a Discord...');
 console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
 console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
+console.log(`📊 Node.js versión: ${process.version}`);
+console.log(`🌐 Intentando conectar a Gateway de Discord...`);
+
+// Debug: eventos del cliente
+client.on('debug', info => {
+    console.log(`[DEBUG] ${info}`);
+});
+
+client.on('rateLimit', info => {
+    console.log(`[RATELIMIT] ${JSON.stringify(info)}`);
+});
 
 const loginPromise = client.login(process.env.DISCORD_TOKEN)
     .then(() => {
