@@ -3,265 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuroMaster League | Elite Haxball Competition</title>
+    <title>EuroMaster League - La élite del Haxball Ecuatoriano</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
-<body class="dark-theme">
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
-        <div class="container nav-container">
+<body>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-container">
             <div class="logo-container">
-                <div class="logo-icon">
-                    <i class="fas fa-crown"></i>
+                <div class="logo-placeholder">
+                    <i class="fas fa-trophy"></i>
+                    <small>LOGO AQUÍ</small>
                 </div>
                 <div class="logo-text">
-                    <span class="logo-main">EUROMASTER</span>
-                    <span class="logo-sub">LEAGUE</span>
+                    <h1>EUROMASTER LEAGUE</h1>
+                    <p class="tagline">Liga Ecuatoriana de Haxball con Alma Europea</p>
                 </div>
             </div>
-
-            <div class="nav-menu">
-                <a href="index.html" class="nav-link active">
-                    <i class="fas fa-home"></i> <span>Inicio</span>
-                </a>
-                <a href="/matches" class="nav-link">
-                    <i class="fas fa-tv"></i> <span>Partidos</span>
-                </a>
-                <a href="/standings" class="nav-link">
-                    <i class="fas fa-table"></i> <span>Tabla</span>
-                </a>
-                <a href="/teams" class="nav-link">
-                    <i class="fas fa-users"></i> <span>Equipos</span>
-                </a>
-                <a href="/players" class="nav-link">
-                    <i class="fas fa-user"></i> <span>Jugadores</span>
-                </a>
-                <a href="/live" class="nav-link live-indicator">
-                    <i class="fas fa-broadcast-tower"></i> <span>EN VIVO</span>
-                    <span class="live-pulse"></span>
-                </a>
-            </div>
-
-            <div class="nav-actions">
-                <a href="https://discord.gg/euromaster" target="_blank" class="btn btn-discord">
-                    <i class="fab fa-discord"></i> Discord
-                </a>
-                <a href="/admin-panel" class="btn btn-admin">
-                    <i class="fas fa-lock"></i> Admin
-                </a>
-                <button class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ===== HERO SECTION ===== -->
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="gradient-text">EUROMASTER LEAGUE</span>
-                </h1>
-                <p class="hero-subtitle">La Élite del Haxball Competitivo Europeo</p>
-                <p class="hero-desc">Liga profesional • Estadísticas en tiempo real • Streaming 24/7</p>
-                
-                <div class="hero-buttons">
-                    <a href="/live" class="btn btn-primary btn-lg">
-                        <i class="fas fa-play"></i> VER EN DIRECTO
-                    </a>
-                    <a href="/standings" class="btn btn-secondary btn-lg">
-                        <i class="fas fa-trophy"></i> VER CLASIFICACIÓN
-                    </a>
-                </div>
-            </div>
-
-            <!-- NEXT MATCH WIDGET -->
-            <div class="next-match-widget">
-                <div class="widget-header">
-                    <h3><i class="fas fa-fire"></i> PRÓXIMO PARTIDO</h3>
-                    <div class="match-countdown" id="matchCountdown">20:00:00</div>
-                </div>
-                
-                <div class="teams-preview">
-                    <div class="team-home">
-                        <img src="https://via.placeholder.com/80/0066FF/FFFFFF?text=DRG" alt="Dragons" class="team-logo">
-                        <h4>DRAGONS</h4>
-                        <p class="team-record">5-1-2</p>
-                    </div>
-                    
-                    <div class="match-vs">
-                        <div class="match-details">
-                            <div class="match-tournament">EML Season 1</div>
-                            <div class="match-vs-text">VS</div>
-                            <div class="match-time">HOY • 20:00 CET</div>
-                        </div>
-                    </div>
-                    
-                    <div class="team-away">
-                        <img src="https://via.placeholder.com/80/FF5500/FFFFFF?text=VIK" alt="Vikings" class="team-logo">
-                        <h4>VIKINGS</h4>
-                        <p class="team-record">6-0-2</p>
-                    </div>
-                </div>
-                
-                <div class="widget-footer">
-                    <a href="/live" class="btn btn-watch">
-                        <i class="fas fa-play-circle"></i> VER STREAM
-                    </a>
-                    <a href="/match-detail" class="btn btn-details">
-                        <i class="fas fa-info-circle"></i> DETALLES
-                    </a>
-                </div>
-            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/" class="nav-link active"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="/teams" class="nav-link"><i class="fas fa-users"></i> Equipos</a></li>
+                    <li><a href="/matches" class="nav-link"><i class="fas fa-futbol"></i> Partidos</a></li>
+                    <li><a href="/standings" class="nav-link"><i class="fas fa-list-ol"></i> Clasificación</a></li>
+                    <li><a href="/stats" class="nav-link"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="/live" class="nav-link"><i class="fas fa-video"></i> En Vivo</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <main class="container">
-        <!-- RECENT MATCHES SECTION -->
-        <section class="section">
-            <div class="section-header">
-                <h2><i class="fas fa-history"></i> ÚLTIMOS RESULTADOS</h2>
-                <a href="/matches" class="section-link">Ver todos <i class="fas fa-arrow-right"></i></a>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">EUROMASTER LEAGUE</h1>
+            <p class="hero-subtitle">La máxima competencia de Haxball en Ecuador • Inspiración Europea • Competitividad Élite</p>
+            <div class="cta-buttons">
+                <a href="/standings" class="btn btn-primary"><i class="fas fa-table"></i> Ver Clasificación</a>
+                <a href="/live" class="btn btn-secondary"><i class="fas fa-play-circle"></i> Próximos Partidos</a>
             </div>
-            
-            <div class="matches-grid" id="recentMatches">
-                <!-- Los partidos se cargarán con JavaScript -->
-                <div class="loading">Cargando últimos partidos...</div>
+        </div>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- CARACTERÍSTICAS -->
+        <section class="features-section">
+            <h2 class="section-title">La Liga Más Competitiva</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fas fa-globe-europe"></i>
+                    </div>
+                    <h3>Temática Europea</h3>
+                    <p>Inspirada en las grandes ligas europeas con identidad ecuatoriana. Lo mejor de ambos mundos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Competitividad Élite</h3>
+                    <p>Los mejores equipos y jugadores de Haxball de Ecuador compitiendo por el título supremo.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Estadísticas en Vivo</h3>
+                    <p>Seguimiento detallado de estadísticas, rendimiento y análisis táctico en tiempo real.</p>
+                </div>
             </div>
         </section>
 
-        <!-- STANDINGS PREVIEW -->
-        <section class="section">
-            <div class="section-header">
-                <h2><i class="fas fa-trophy"></i> CLASIFICACIÓN</h2>
-                <a href="/standings" class="section-link">Tabla completa <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="standings-preview">
-                <table class="standings-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>EQUIPO</th>
-                            <th>PJ</th>
-                            <th>G</th>
-                            <th>E</th>
-                            <th>P</th>
-                            <th>GF</th>
-                            <th>GC</th>
-                            <th>PTS</th>
-                            <th>FORM</th>
-                        </tr>
-                    </thead>
-                    <tbody id="standingsTable">
-                        <!-- La tabla se cargará con JavaScript -->
-                        <tr><td colspan="10">Cargando clasificación...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- TOP PLAYERS -->
-        <section class="section">
-            <div class="section-header">
-                <h2><i class="fas fa-star"></i> JUGADORES DESTACADOS</h2>
-                <a href="/players" class="section-link">Ver ranking <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="players-grid" id="topPlayers">
-                <!-- Los jugadores se cargarán con JavaScript -->
-                <div class="loading">Cargando jugadores...</div>
-            </div>
-        </section>
-
-        <!-- UPCOMING MATCHES -->
-        <section class="section">
-            <div class="section-header">
-                <h2><i class="fas fa-calendar-alt"></i> PRÓXIMOS ENCUENTROS</h2>
-                <a href="/schedule" class="section-link">Calendario completo <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="schedule-list" id="upcomingMatches">
-                <!-- Partidos próximos se cargarán con JavaScript -->
-                <div class="loading">Cargando próximos partidos...</div>
+        <!-- PRÓXIMOS ENCUENTROS -->
+        <section class="matches-section">
+            <h2 class="section-title">Próximos Encuentros</h2>
+            <div class="page-content">
+                <div class="coming-soon">
+                    <div class="coming-soon-icon">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <h3>Temporada en Preparación</h3>
+                    <p>La primera temporada de la EuroMaster League está en fase de organización.</p>
+                    <p><strong>Pronto anunciaremos equipos, calendario y sistema de competencia.</strong></p>
+                    <a href="/schedule" class="btn btn-primary" style="margin-top: 1rem;">Ver Calendario</a>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <i class="fas fa-crown"></i>
-                        <div>
-                            <span class="logo-main">EUROMASTER</span>
-                            <span class="logo-sub">LEAGUE</span>
-                        </div>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo-container">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-trophy"></i>
                     </div>
-                    <p class="footer-desc">
-                        La liga profesional de Haxball más competitiva de Europa. 
-                        Estadísticas en tiempo real, streaming de calidad y gestión profesional.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-twitch"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <div class="logo-text">
+                        <h3>EUROMASTER LEAGUE</h3>
                     </div>
                 </div>
-                
-                <div class="footer-col">
-                    <h4>COMPETICIONES</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">EML Season 1</a></li>
-                        <li><a href="#">EuroMaster Cup</a></li>
-                        <li><a href="#">Winter Championship</a></li>
-                        <li><a href="#">All-Star Event</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>ENLACES RÁPIDOS</h4>
-                    <ul class="footer-links">
-                        <li><a href="/standings">Clasificación</a></li>
-                        <li><a href="/matches">Partidos</a></li>
-                        <li><a href="/teams">Equipos</a></li>
-                        <li><a href="/players">Jugadores</a></li>
-                        <li><a href="/stats">Estadísticas</a></li>
-                        <li><a href="/live">Stream en vivo</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>CONTACTO</h4>
-                    <ul class="footer-links">
-                        <li><a href="/admin-panel">Panel de Admin</a></li>
-                        <li><a href="#">Reglamento</a></li>
-                        <li><a href="#">Soporte</a></li>
-                        <li><a href="#">Patrocinadores</a></li>
-                    </ul>
-                </div>
+                <p>Liga ecuatoriana de Haxball con inspiración en las grandes ligas europeas.</p>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2024 EuroMaster League. Todos los derechos reservados.</p>
-                <p class="disclaimer">Esta es una liga competitiva de Haxball. No afiliada a Haxball.com</p>
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="/teams">Equipos</a></li>
+                    <li><a href="/matches">Partidos</a></li>
+                    <li><a href="/standings">Clasificación</a></li>
+                    <li><a href="/stats">Estadísticas</a></li>
+                </ul>
             </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul class="footer-links">
+                    <li><i class="fab fa-discord"></i> Discord: EML_Official</li>
+                    <li><i class="fas fa-envelope"></i> contacto@euromasterleague.ec</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 EuroMaster League. Todos los derechos reservados.</p>
+            <p>Liga Ecuatoriana de Haxball • Orgullosamente hecho en Ecuador con inspiración Europea</p>
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script src="main.js"></script>
-    <script src="assets/js/ui.js"></script>
-    <script src="assets/js/api.js"></script>
 </body>
 </html>

@@ -6,8 +6,11 @@
       "use": "@vercel/node"
     },
     {
-      "src": "**/*",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "."
+      }
     }
   ],
   "routes": [
@@ -56,13 +59,20 @@
       "dest": "/pages/match-detail.html"
     },
     {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg))",
+      "src": "/test-vercel.html",
+      "dest": "/test-vercel.html"
+    },
+    {
+      "src": "/test-minimal.html",
+      "dest": "/test-minimal.html"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml))",
       "dest": "/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
+      "dest": "/index.html"
     }
   ]
 }
