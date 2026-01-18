@@ -1,14 +1,13 @@
 {
-  "name": "euromaster-league-web",
+  "name": "euro-master-league",
   "version": "1.0.0",
-  "description": "EuroMaster League Haxball - Website",
   "scripts": {
-    "dev": "npx serve frontend -s",
-    "start": "npx serve frontend -s -l 3000",
-    "build": "echo 'Static site - no build required'"
+    "build": "echo 'Build step: archivos estáticos listos'"
   },
   "dependencies": {
-    "axios": "^1.13.2",
-    "serve": "^14.2.1"
+    "@octokit/rest": "^20.0.0"
+  },
+  "devDependencies": {
+    "@vercel/static-build": "^1.0.0"
   }
 }

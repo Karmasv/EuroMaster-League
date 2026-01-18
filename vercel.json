@@ -2,36 +2,70 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": ".",
-        "cleanUrls": true
+        "distDir": "."
       }
     }
   ],
   "routes": [
-    // Redirigir la raíz a index.html
     {
-      "src": "/",
-      "dest": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
-    // Servir páginas estáticas desde /pages
     {
-      "src": "/(teams|matches|players|admin-panel|live|match-detail|stats|schedule|team-detail|standings)",
-      "dest": "/pages/$1.html"
+      "src": "/teams",
+      "dest": "/pages/teams.html"
     },
-    // Servir archivos estáticos (CSS, JS, imágenes)
     {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml))",
+      "src": "/matches",
+      "dest": "/pages/matches.html"
+    },
+    {
+      "src": "/players",
+      "dest": "/pages/players.html"
+    },
+    {
+      "src": "/standings",
+      "dest": "/pages/standings.html"
+    },
+    {
+      "src": "/stats",
+      "dest": "/pages/stats.html"
+    },
+    {
+      "src": "/schedule",
+      "dest": "/pages/schedule.html"
+    },
+    {
+      "src": "/live",
+      "dest": "/pages/live.html"
+    },
+    {
+      "src": "/admin-panel",
+      "dest": "/pages/admin-panel.html"
+    },
+    {
+      "src": "/team-detail",
+      "dest": "/pages/team-detail.html"
+    },
+    {
+      "src": "/match-detail",
+      "dest": "/pages/match-detail.html"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml|woff|woff2|ttf|eot|svg))",
       "dest": "/$1"
     },
-    // Para cualquier otra ruta, servir index.html (para rutas no encontradas)
     {
       "src": "/(.*)",
       "dest": "/index.html"
     }
   ],
-  "trailingSlash": false,
-  "cleanUrls": true
+  "trailingSlash": false
 }
