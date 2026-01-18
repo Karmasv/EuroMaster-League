@@ -121,16 +121,9 @@ const loginPromise = client.login(process.env.DISCORD_TOKEN)
         throw error;
     });
 
-// Timeout para detectar si el bot no se conecta (30 segundos)
-const loginTimeout = setTimeout(() => {
-    console.error('❌ TIMEOUT: El bot no se conectó en 30 segundos');
-    process.exit(1);
-}, 30000);
-
 // Cuando el bot se conecta, iniciar servidor HTTP
 loginPromise
     .then(() => {
-        clearTimeout(loginTimeout);
         console.log('🌐 Iniciando servidor HTTP...');
         
         // Iniciar servidor HTTP solo después de conectar el bot
@@ -139,8 +132,10 @@ loginPromise
         });
     })
     .catch(error => {
-        clearTimeout(loginTimeout);
         console.error('❌ Error fatal: El bot no pudo conectarse');
-        process.exit(1);
+        console.error('Esperando 10 segundos antes de salir...');
+        setTimeout(() => {
+            process.exit(1);
+        }, 10000);
     });
 
