@@ -2,6 +2,21 @@ require('dotenv').config();
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const express = require('express');
+
+// Crear aplicación Express para mantener el bot activo
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Endpoint de health check
+app.get('/health', (req, res) => {
+    res.json({ status: 'online', bot: client?.user?.username || 'Conectando...' });
+});
+
+// Iniciar servidor HTTP
+app.listen(PORT, () => {
+    console.log(`🌐 Servidor HTTP escuchando en puerto ${PORT}`);
+});
 
 // Verificar variables de entorno
 if (!process.env.DISCORD_TOKEN) {
