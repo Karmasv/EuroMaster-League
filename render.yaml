@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: euromaster-league-website
+    env: static
+    buildCommand: npm install
+    staticPublishPath: .
+    routes:
+      - path: /
+        matchType: prefix
+        dest: /index.html
+
+  - type: background_worker
+    name: euromaster-league-bot
+    env: node
+    plan: free
+    region: oregon
+    rootDir: discord-bot
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: DISCORD_TOKEN
+        scope: run_and_build_service
+      - key: CLIENT_ID
+        scope: run_and_build_service
+      - key: GITHUB_TOKEN
+        scope: run_and_build_service
+      - key: GITHUB_OWNER
+        scope: run_and_build_service
+      - key: GITHUB_REPO
+        scope: run_and_build_service

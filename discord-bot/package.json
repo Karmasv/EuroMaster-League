@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "deploy": "node deploy-commands.js"
+    "deploy": "node deploy-commands.js",
+    "build": "echo 'No build needed for Discord Bot'"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
