@@ -4,28 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
-// Crear aplicación Express para mantener el bot activo
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Endpoint de health check
-app.get('/health', (req, res) => {
-    res.json({ status: 'online', bot: client?.user?.username || 'Conectando...' });
-});
-
-// Iniciar servidor HTTP
-app.listen(PORT, () => {
-    console.log(`🌐 Servidor HTTP escuchando en puerto ${PORT}`);
-});
-
-// Verificar variables de entorno
+// Verificar variables de entorno PRIMERO
 if (!process.env.DISCORD_TOKEN) {
     console.error('❌ ERROR: DISCORD_TOKEN no está definido en .env');
     console.log('📝 Copia .env.example a .env y llena tus datos');
     process.exit(1);
 }
 
-// Crear cliente
+// Crear cliente PRIMERO
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -37,6 +23,24 @@ const client = new Client({
 
 // Colecciones
 client.commands = new Collection();
+
+// DESPUÉS crear Express
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Endpoint de health check
+app.get('/health', (req, res) => {
+    res.json({ status: 'online', bot: client?.user?.username || 'Conectando...' });
+});
+
+app.get('/', (req, res) => {
+    res.send('Bot está corriendo');
+});
+
+// Iniciar servidor HTTP
+app.listen(PORT, () => {
+    console.log(`🌐 Servidor HTTP escuchando en puerto ${PORT}`);
+});
 
 // Cargar comandos
 const commandsPath = path.join(__dirname, 'commands');
@@ -52,28 +56,9 @@ for (const file of commandFiles) {
         }
     } catch (error) {
         console.log(`  ❌ ${file}: ${error.message}`);
-        // Continuar cargando otros comandos aunque haya error
         continue;
     }
 }
-
-// Añade esto después de cargar los comandos
-const PermissionManager = require('./utils/permissions');
-
-// Al iniciar el bot, verificar owners
-client.once('ready', () => {
-    console.log('🤖 Bot conectado...');
-    
-    // Cargar owners
-    const owners = PermissionManager.getOwners();
-    console.log(`👑 ${owners.length} owners configurados`);
-    
-    // Si no hay owners, usar el de .env como inicial
-    if (owners.length === 0 && process.env.INITIAL_OWNER_ID) {
-        console.log(`⚠️  Configurando owner inicial: ${process.env.INITIAL_OWNER_ID}`);
-        // Aquí podrías inicializar el archivo owners.json
-    }
-});
 
 // Cargar eventos
 const eventsPath = path.join(__dirname, 'events');
@@ -95,12 +80,25 @@ for (const file of eventFiles) {
 }
 
 // Manejar errores
-client.on('error', console.error);
-process.on('unhandledRejection', console.error);
+client.on('error', error => {
+    console.error('❌ Error del cliente:', error);
+});
+
+process.on('unhandledRejection', error => {
+    console.error('❌ Unhandled rejection:', error);
+});
 
 // Iniciar bot
 console.log('🚀 Iniciando bot...');
-client.login(process.env.DISCORD_TOKEN).catch(error => {
-    console.error('❌ Error al iniciar sesión:', error);
-    process.exit(1);
-});
+console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
+console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN?.length || 0} caracteres`);
+
+client.login(process.env.DISCORD_TOKEN)
+    .then(() => {
+        console.log('✅ Login ejecutado exitosamente');
+    })
+    .catch(error => {
+        console.error('❌ Error al iniciar sesión:', error.message);
+        console.error('❌ Detalles completos:', error);
+        process.exit(1);
+    });
