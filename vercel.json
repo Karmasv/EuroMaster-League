@@ -15,7 +15,7 @@
   ],
   "routes": [
     {"src": "/api/(.*)", "dest": "/api/$1"},
-    {"src": "/(?!api|styles\\.css|.*\\.js|.*\\.json)(.*)$", "dest": "/index.html"},
-    {"src": "/(.*)", "dest": "/$1"}
+    {"src": "/(.+\\.(js|css|gif|jpg|jpeg|png|ico|svg|webp|json|xml|txt))$", "dest": "/$1"},
+    {"src": "/.*", "dest": "/index.html"}
   ]
 }
