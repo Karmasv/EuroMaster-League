@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partidos - EuroMaster League</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="logo-emblem">
+                    <img src="assets/img/logo.png" alt="EuroMaster League">
+                </div>
+                <span>EML</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="standings.html">Clasificación</a></li>
+                <li><a href="matches.html" class="nav-active">Partidos</a></li>
+                <li><a href="teams.html">Equipos</a></li>
+                <li><a href="players.html">Jugadores</a></li>
+                <li><a href="live.html">EN VIVO</a></li>
+            </ul>
+
+            <a href="https://discord.gg/7d35dQnErW" target="_blank" class="btn-icon">
+                <i class="fab fa-discord"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="padding-top: 120px; padding-bottom: 60px;">
+        <div class="hero-container" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <h1 class="hero-title">Partidos</h1>
+            <p class="hero-description">Los partidos se actualizarán automáticamente a través del bot de Discord.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section" style="padding: 4rem 2rem; text-align: center;">
+        <div class="container">
+            <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 4rem 2rem;">
+                <i class="fas fa-calendar-days" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem; display: block;"></i>
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Próximos Partidos</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Los partidos se cargarán automáticamente desde el bot de Discord. Usa el comando correspondiente en Discord para ver todos los partidos.</p>
+                <a href="https://discord.gg/7d35dQnErW" target="_blank" class="btn-hero" style="display: inline-block;">
+                    <i class="fab fa-discord"></i> Ir a Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="assets/img/logo.png" alt="EuroMaster League Logo">
+                    </div>
+                    <div>
+                        <h3 class="footer-title">EUROMASTER LEAGUE</h3>
+                        <p class="footer-tagline">Liga ecuatoriana de Haxball profesional.</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Links</h4>
+                        <a href="standings.html">Clasificación</a>
+                        <a href="teams.html">Equipos</a>
+                        <a href="players.html">Jugadores</a>
+                        <a href="https://discord.gg/7d35dQnErW" target="_blank">Discord</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 EuroMaster League Ecuador. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
