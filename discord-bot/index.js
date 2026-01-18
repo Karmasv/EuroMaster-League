@@ -56,6 +56,7 @@ for (const file of commandFiles) {
         continue;
     }
 }
+
 // Añade esto después de cargar los comandos
 const PermissionManager = require('./utils/permissions');
 
@@ -73,6 +74,7 @@ client.once('ready', () => {
         // Aquí podrías inicializar el archivo owners.json
     }
 });
+
 // Cargar eventos
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
