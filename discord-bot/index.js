@@ -113,7 +113,11 @@ const loginPromise = client.login(process.env.DISCORD_TOKEN)
         return client;
     })
     .catch(error => {
-        console.error('❌ Error en login:', error.message);
+        console.error('❌ Error en login:');
+        console.error('  Code:', error.code);
+        console.error('  Message:', error.message);
+        console.error('  Name:', error.name);
+        console.error('  HTTP Status:', error.httpStatus);
         throw error;
     });
 
