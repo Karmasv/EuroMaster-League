@@ -4,14 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
-// Verificar variables de entorno PRIMERO
+// Verificar variables de entorno
 if (!process.env.DISCORD_TOKEN) {
-    console.error('❌ ERROR: DISCORD_TOKEN no está definido en .env');
-    console.log('📝 Copia .env.example a .env y llena tus datos');
+    console.error('❌ ERROR: DISCORD_TOKEN no está definido');
     process.exit(1);
 }
 
-// Crear cliente PRIMERO
+// Crear cliente
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -24,22 +23,13 @@ const client = new Client({
 // Colecciones
 client.commands = new Collection();
 
-// DESPUÉS crear Express
+// Crear Express (pero NO iniciar aún)
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Endpoint de health check
 app.get('/health', (req, res) => {
     res.json({ status: 'online', bot: client?.user?.username || 'Conectando...' });
-});
-
-app.get('/', (req, res) => {
-    res.send('Bot está corriendo');
-});
-
-// Iniciar servidor HTTP
-app.listen(PORT, () => {
-    console.log(`🌐 Servidor HTTP escuchando en puerto ${PORT}`);
 });
 
 // Cargar comandos
@@ -59,6 +49,35 @@ for (const file of commandFiles) {
         continue;
     }
 }
+
+// Cargar PermissionManager
+const PermissionManager = require('./utils/permissions');
+
+// Evento ready
+client.once('ready', () => {
+    console.log(`✅ ${client.user.tag} está online!`);
+    console.log(`📊 Servidores: ${client.guilds.cache.size}`);
+    console.log(`⚙️ Comandos: ${client.commands.size}`);
+    
+    // Cargar owners
+    const owners = PermissionManager.getOwners();
+    console.log(`👑 ${owners.length} owners configurados`);
+    
+    // Establecer estado
+    client.user.setPresence({
+        activities: [{
+            name: '/comandos | EuroMaster League',
+            type: 'WATCHING'
+        }],
+        status: 'online'
+    });
+    
+    // Log de inicio
+    const logChannel = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
+    if (logChannel) {
+        logChannel.send(`✅ **EuroMaster League Bot** iniciado correctamente.\n📊 ${client.commands.size} comandos cargados.`);
+    }
+});
 
 // Cargar eventos
 const eventsPath = path.join(__dirname, 'events');
@@ -80,25 +99,44 @@ for (const file of eventFiles) {
 }
 
 // Manejar errores
-client.on('error', error => {
-    console.error('❌ Error del cliente:', error);
-});
+client.on('error', console.error);
+process.on('unhandledRejection', console.error);
 
-process.on('unhandledRejection', error => {
-    console.error('❌ Unhandled rejection:', error);
-});
-
-// Iniciar bot
-console.log('🚀 Iniciando bot...');
+// CONECTAR BOT PRIMERO - luego iniciar servidor
+console.log('🚀 Conectando bot a Discord...');
 console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
-console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN?.length || 0} caracteres`);
+console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
 
-client.login(process.env.DISCORD_TOKEN)
+const loginPromise = client.login(process.env.DISCORD_TOKEN)
     .then(() => {
-        console.log('✅ Login ejecutado exitosamente');
+        console.log('✅ Bot conectado exitosamente');
+        return client;
     })
     .catch(error => {
-        console.error('❌ Error al iniciar sesión:', error.message);
-        console.error('❌ Detalles completos:', error);
+        console.error('❌ Error en login:', error.message);
+        throw error;
+    });
+
+// Timeout para detectar si el bot no se conecta (30 segundos)
+const loginTimeout = setTimeout(() => {
+    console.error('❌ TIMEOUT: El bot no se conectó en 30 segundos');
+    process.exit(1);
+}, 30000);
+
+// Cuando el bot se conecta, iniciar servidor HTTP
+loginPromise
+    .then(() => {
+        clearTimeout(loginTimeout);
+        console.log('🌐 Iniciando servidor HTTP...');
+        
+        // Iniciar servidor HTTP solo después de conectar el bot
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`✅ Servidor HTTP escuchando en puerto ${PORT}`);
+        });
+    })
+    .catch(error => {
+        clearTimeout(loginTimeout);
+        console.error('❌ Error fatal: El bot no pudo conectarse');
         process.exit(1);
     });
+
