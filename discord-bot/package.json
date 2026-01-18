@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "deploy": "node deploy-commands.js",
-    "build": "echo 'No build needed for Discord Bot'"
+    "build": "npm install --force && echo 'Build complete'",
+    "postinstall": "echo 'Dependencies installed successfully'"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",

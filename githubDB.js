@@ -77,6 +77,12 @@ class GitHubDB {
         throw new Error(`Colección no válida: ${collection}`);
       }
 
+      // Si no tenemos Octokit, usar base de datos local
+      if (this.useLocalDB) {
+        console.warn('⚠️ No hay conexión a GitHub, guardando localmente (cambios se perderán al reiniciar)');
+        return this._setLocal(collection, data);
+      }
+
       const filePath = this.collections[collection];
       const content = JSON.stringify(data, null, 2);
       const contentEncoded = Buffer.from(content).toString('base64');
@@ -165,6 +171,25 @@ class GitHubDB {
     } catch (error) {
       console.warn(`⚠️ No se pudo leer ${collection} localmente:`, error.message);
       return [];
+    }
+  }
+
+  // Método para guardar datos de forma local
+  _setLocal(collection, data) {
+    try {
+      const filePath = path.join(__dirname, this.collections[collection]);
+      const dir = path.dirname(filePath);
+      
+      // Crear directorio si no existe
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+      return true;
+    } catch (error) {
+      console.error(`❌ Error guardando ${collection} localmente:`, error.message);
+      throw error;
     }
   }
 }
