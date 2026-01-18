@@ -47,29 +47,44 @@ module.exports = async (req, res) => {
   
   // POST
   if (req.method === 'POST') {
-    const { collection, data } = req.body;
+    // Soporta tanto 'file' como 'collection' para flexibilidad
+    const collection = req.body.collection || req.body.file;
+    const data = req.body.data;
+    
     if (!collection || !collections[collection]) {
       return res.status(400).json({ error: 'Invalid collection' });
     }
     
-    const content = JSON.stringify(data, null, 2);
-    const contentEncoded = Buffer.from(content).toString('base64');
+    if (!data) {
+      return res.status(400).json({ error: 'Data is required' });
+    }
     
-    let sha = null;
     try {
-      const existing = await octokit.repos.getContent({
-        owner, repo, path: collections[collection], ref: branch
+      const content = JSON.stringify(data, null, 2);
+      const contentEncoded = Buffer.from(content).toString('base64');
+      
+      let sha = null;
+      try {
+        const existing = await octokit.repos.getContent({
+          owner, repo, path: collections[collection], ref: branch
+        });
+        sha = existing.data.sha;
+      } catch (e) {
+        // Archivo no existe aún, continuamos sin sha
+      }
+      
+      await octokit.repos.createOrUpdateFileContents({
+        owner, repo, path: collections[collection],
+        message: `Update ${collection} via API`,
+        content: contentEncoded, branch, sha
       });
-      sha = existing.data.sha;
-    } catch (e) {}
-    
-    await octokit.repos.createOrUpdateFileContents({
-      owner, repo, path: collections[collection],
-      message: `Update ${collection}`,
-      content: contentEncoded, branch, sha
-    });
-    
-    return res.status(200).json({ success: true });
+      
+      console.log(`✅ Datos de ${collection} actualizados en GitHub vía API`);
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      console.error(`❌ Error al actualizar ${collection}:`, error.message);
+      return res.status(500).json({ error: error.message });
+    }
   }
   
   return res.status(405).json({ error: 'Method not allowed' });

@@ -4,11 +4,20 @@ const fs = require('fs');
 const path = require('path');
 
 let Octokit;
+let axios;
+
 try {
   Octokit = require('@octokit/rest').Octokit;
 } catch (error) {
-  console.warn('⚠️ @octokit/rest no disponible, usando base de datos local');
+  console.warn('⚠️ @octokit/rest no disponible');
   Octokit = null;
+}
+
+try {
+  axios = require('axios');
+} catch (error) {
+  console.warn('⚠️ axios no disponible');
+  axios = null;
 }
 
 class GitHubDB {
@@ -77,10 +86,10 @@ class GitHubDB {
         throw new Error(`Colección no válida: ${collection}`);
       }
 
-      // Si no tenemos Octokit, usar base de datos local
+      // Si no tenemos Octokit, intentar escribir a través de la API web
       if (this.useLocalDB) {
-        console.warn('⚠️ No hay conexión a GitHub, guardando localmente (cambios se perderán al reiniciar)');
-        return this._setLocal(collection, data);
+        console.warn('⚠️ Usando API web para guardar datos...');
+        return this._setViaWebAPI(collection, data);
       }
 
       const filePath = this.collections[collection];
@@ -174,21 +183,27 @@ class GitHubDB {
     }
   }
 
-  // Método para guardar datos de forma local
-  _setLocal(collection, data) {
+  // Método para guardar datos a través de la API web (Vercel)
+  async _setViaWebAPI(collection, data) {
     try {
-      const filePath = path.join(__dirname, this.collections[collection]);
-      const dir = path.dirname(filePath);
-      
-      // Crear directorio si no existe
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
+      if (!axios) {
+        throw new Error('axios no disponible para realizar la llamada API');
       }
+
+      const apiUrl = process.env.WEB_API_URL || 'https://euromasterleague.vercel.app/api/data';
       
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-      return true;
+      const response = await axios.post(apiUrl, {
+        file: collection,
+        data: data
+      }, {
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 10000
+      });
+
+      console.log(`✅ Datos de ${collection} guardados a través de la API web`);
+      return response.data;
     } catch (error) {
-      console.error(`❌ Error guardando ${collection} localmente:`, error.message);
+      console.error(`❌ Error al guardar ${collection} en API web:`, error.message);
       throw error;
     }
   }
