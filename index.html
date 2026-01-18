@@ -3,200 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuroMaster League - La élite del Haxball Ecuatoriano</title>
+    <title>EuroMaster League - Liga Ecuatoriana de Haxball</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/img/favicon.ico">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <div class="logo">
+    <!-- HEADER FIJADO -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo-box">
                     <i class="fas fa-crown"></i>
                 </div>
-                <div class="brand-text">
+                <div class="logo-text">
                     <h1>EUROMASTER LEAGUE</h1>
-                    <p>Liga Ecuatoriana de Haxball</p>
+                    <p style="font-size: 12px; color: #aaa; letter-spacing: 2px;">ECUADOR | EUROPA</p>
                 </div>
             </div>
-            <ul class="nav-links">
-                <li><a href="/" class="active"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="/teams"><i class="fas fa-users"></i> Equipos</a></li>
-                <li><a href="/matches"><i class="fas fa-futbol"></i> Partidos</a></li>
-                <li><a href="/standings"><i class="fas fa-list-ol"></i> Clasificación</a></li>
-                <li><a href="/stats"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-                <li><a href="/live"><i class="fas fa-video"></i> En Vivo</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">EUROMASTER LEAGUE 2026</h1>
-                <p class="hero-subtitle">La máxima competición de Haxball en Ecuador, donde la pasión latinoamericana se encuentra con la tradición europea.</p>
-                <div class="hero-buttons">
-                    <a href="/standings" class="btn btn-primary"><i class="fas fa-table"></i> Ver Clasificación</a>
-                    <a href="/matches" class="btn btn-outline"><i class="fas fa-calendar"></i> Calendario</a>
-                </div>
-            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/" class="active"><i class="fas fa-home"></i> INICIO</a></li>
+                    <li><a href="/teams"><i class="fas fa-users"></i> EQUIPOS</a></li>
+                    <li><a href="/matches"><i class="fas fa-futbol"></i> PARTIDOS</a></li>
+                    <li><a href="/standings"><i class="fas fa-list-ol"></i> CLASIFICACIÓN</a></li>
+                    <li><a href="/stats"><i class="fas fa-chart-bar"></i> ESTADÍSTICAS</a></li>
+                    <li><a href="/live"><i class="fas fa-video"></i> EN VIVO</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main class="container">
-        <section class="section">
-            <h2 class="section-title">Clasificación Primera División</h2>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Equipo</th>
-                            <th>PJ</th>
-                            <th>G</th>
-                            <th>E</th>
-                            <th>P</th>
-                            <th>GF</th>
-                            <th>GC</th>
-                            <th>DG</th>
-                            <th>Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><strong>Real Madrid Ecuador</strong></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><strong>0</strong></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><strong>Barcelona SC</strong></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><strong>0</strong></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><strong>Emelec Europa</strong></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><strong>0</strong></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><strong>LDU Internacional</strong></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><strong>0</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="header-container">
+            <h1 class="hero-title">EUROMASTER LEAGUE 2026</h1>
+            <p class="hero-subtitle">
+                La máxima competencia de Haxball en Ecuador. Donde la pasión latinoamericana 
+                se fusiona con la tradición y competitividad de las grandes ligas europeas. 
+                Sigue cada jugada, cada gol, cada emoción en tiempo real.
+            </p>
+            
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 40px;">
+                <a href="/standings" class="btn btn-primary">
+                    <i class="fas fa-table"></i> VER CLASIFICACIÓN
+                </a>
+                <a href="/matches" class="btn btn-secondary">
+                    <i class="fas fa-calendar-alt"></i> CALENDARIO
+                </a>
             </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Próximos Partidos</h2>
-            <div class="matches-grid">
-                <div class="match-card">
-                    <div class="match-header">
-                        <span class="match-league">EML I - Jornada 1</span>
-                        <span class="match-date">25/01/2026 - 20:00</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-logo">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="team-name">Real Madrid EC</div>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-logo">
-                                <i class="fas fa-dragon"></i>
-                            </div>
-                            <div class="team-name">Barcelona SC</div>
-                        </div>
-                    </div>
+            
+            <!-- ESTADÍSTICAS RÁPIDAS -->
+            <div style="display: flex; justify-content: center; gap: 40px; margin-top: 60px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 36px; font-weight: 900; color: #d4af37;">16</div>
+                    <div style="font-size: 14px; color: #aaa; text-transform: uppercase;">EQUIPOS</div>
                 </div>
-                <div class="match-card">
-                    <div class="match-header">
-                        <span class="match-league">EML I - Jornada 1</span>
-                        <span class="match-date">26/01/2026 - 19:00</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-logo">
-                                <i class="fas fa-lion"></i>
-                            </div>
-                            <div class="team-name">Emelec Europa</div>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-logo">
-                                <i class="fas fa-anchor"></i>
-                            </div>
-                            <div class="team-name">LDU Internacional</div>
-                        </div>
-                    </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 36px; font-weight: 900; color: #d4af37;">240</div>
+                    <div style="font-size: 14px; color: #aaa; text-transform: uppercase;">PARTIDOS</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 36px; font-weight: 900; color: #d4af37;">720+</div>
+                    <div style="font-size: 14px; color: #aaa; text-transform: uppercase;">GOLES</div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
+    <!-- TABLA DE CLASIFICACIÓN -->
+    <section class="league-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-trophy"></i>
+                CLASIFICACIÓN - PRIMERA DIVISIÓN
+            </h2>
+            <a href="/standings" class="btn btn-secondary" style="font-size: 14px;">
+                VER COMPLETA <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="table-container">
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>EQUIPO</th>
+                        <th>PJ</th>
+                        <th>G</th>
+                        <th>E</th>
+                        <th>P</th>
+                        <th>GF</th>
+                        <th>GC</th>
+                        <th>DG</th>
+                        <th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 900; color: #d4af37;">1</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 30px; height: 30px; background: rgba(212,175,55,0.2); 
+                                     border-radius: 50%; display: grid; place-items: center; font-weight: 900;">R</div>
+                                <div>
+                                    <div style="font-weight: 700;">Real Madrid Ecuador</div>
+                                    <div style="font-size: 12px; color: #aaa;">Quito</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td style="font-weight: 900;">0</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 900; color: #aaa;">2</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 30px; height: 30px; background: rgba(230,57,70,0.2); 
+                                     border-radius: 50%; display: grid; place-items: center; font-weight: 900;">B</div>
+                                <div>
+                                    <div style="font-weight: 700;">Barcelona SC</div>
+                                    <div style="font-size: 12px; color: #aaa;">Guayaquil</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td style="font-weight: 900;">0</td>
+                    </tr>
+                    <!-- Más filas según necesites -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- PRÓXIMOS PARTIDOS -->
+    <section class="league-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-futbol"></i>
+                PRÓXIMOS ENCUENTROS
+            </h2>
+            <a href="/matches" class="btn btn-secondary" style="font-size: 14px;">
+                CALENDARIO <i class="fas fa-calendar-alt"></i>
+            </a>
+        </div>
+        
+        <div class="matches-grid">
+            <!-- PARTIDO 1 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <span style="font-weight: 700; color: #d4af37; font-size: 14px;">EML I • JORNADA 1</span>
+                    <span style="color: #aaa; font-size: 14px;">25 ENE 2026 • 20:00</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="team-name">Real Madrid EC</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-dragon"></i>
+                        </div>
+                        <div class="team-name">Barcelona SC</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="#" class="btn btn-secondary" style="font-size: 14px; padding: 10px 20px;">
+                        <i class="fas fa-info-circle"></i> DETALLES
+                    </a>
+                </div>
+            </div>
+            
+            <!-- PARTIDO 2 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <span style="font-weight: 700; color: #d4af37; font-size: 14px;">EML I • JORNADA 1</span>
+                    <span style="color: #aaa; font-size: 14px;">26 ENE 2026 • 19:00</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-lion"></i>
+                        </div>
+                        <div class="team-name">Emelec Europa</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">
+                            <i class="fas fa-anchor"></i>
+                        </div>
+                        <div class="team-name">LDU Internacional</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="#" class="btn btn-secondary" style="font-size: 14px; padding: 10px 20px;">
+                        <i class="fas fa-info-circle"></i> DETALLES
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
                 <div class="footer-section">
-                    <div class="logo">
+                    <div class="logo-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
                         <i class="fas fa-crown"></i>
                     </div>
                     <h3>EUROMASTER LEAGUE</h3>
-                    <p>Liga ecuatoriana de Haxball con inspiración europea.</p>
+                    <p style="color: #aaa; line-height: 1.6; font-size: 14px;">
+                        La máxima competición de Haxball en Ecuador, 
+                        fusionando la pasión latinoamericana con la 
+                        tradición futbolística europea.
+                    </p>
                 </div>
+                
                 <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul>
-                        <li><a href="/teams">Equipos</a></li>
-                        <li><a href="/matches">Partidos</a></li>
+                    <h3>COMPETICIÓN</h3>
+                    <ul class="footer-links">
                         <li><a href="/standings">Clasificación</a></li>
+                        <li><a href="/matches">Calendario</a></li>
+                        <li><a href="/teams">Equipos</a></li>
                         <li><a href="/stats">Estadísticas</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <p><i class="fab fa-discord"></i> Discord: EML_Oficial</p>
-                    <p><i class="fas fa-envelope"></i> info@euromasterleague.ec</p>
+                    <h3>CONTACTO</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord: EML_Oficial</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> @EuroMasterLeague</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@euromasterleague.ec</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 EuroMaster League. Todos los derechos reservados.</p>
+            
+            <div class="copyright">
+                <p>&copy; 2026 EUROMASTER LEAGUE. LIGA ECUATORIANA DE HAXBALL.</p>
+                <p style="margin-top: 10px; font-size: 12px;">INSPIRADO EN LAS GRANDES LIGAS EUROPEAS • DESARROLLADO EN ECUADOR</p>
             </div>
         </div>
     </footer>
 
+    <!-- SCRIPT -->
     <script src="main.js"></script>
 </body>
 </html>

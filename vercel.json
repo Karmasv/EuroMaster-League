@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
@@ -10,57 +14,10 @@
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/teams",
-      "dest": "/pages/teams.html"
-    },
-    {
-      "src": "/matches",
-      "dest": "/pages/matches.html"
-    },
-    {
-      "src": "/players",
-      "dest": "/pages/players.html"
-    },
-    {
-      "src": "/standings",
-      "dest": "/pages/standings.html"
-    },
-    {
-      "src": "/stats",
-      "dest": "/pages/stats.html"
-    },
-    {
-      "src": "/schedule",
-      "dest": "/pages/schedule.html"
-    },
-    {
-      "src": "/live",
-      "dest": "/pages/live.html"
-    },
-    {
-      "src": "/admin-panel",
-      "dest": "/pages/admin-panel.html"
-    },
-    {
-      "src": "/team-detail",
-      "dest": "/pages/team-detail.html"
-    },
-    {
-      "src": "/match-detail",
-      "dest": "/pages/match-detail.html"
-    },
-    {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff2|ttf|eot))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    {"src": "/api/(.*)", "dest": "/api/$1"},
+    {"src": "/teams", "dest": "/index.html"},
+    {"src": "/matches", "dest": "/index.html"},
+    {"src": "/standings", "dest": "/index.html"},
+    {"src": "/(.*)", "dest": "/index.html"}
   ]
 }
