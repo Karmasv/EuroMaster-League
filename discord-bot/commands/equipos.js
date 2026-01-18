@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const Database = require('../utils/database');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,35 +12,61 @@ module.exports = {
     
     async execute(interaction) {
         const equipoNombre = interaction.options.getString('equipo');
-        
+
+        const teams = Database.loadTeams();
+
         if (equipoNombre) {
             // Mostrar equipo específico
+            const team = Database.findTeamByName(equipoNombre);
+            
+            if (!team) {
+                return await interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                            .setColor(0xFF0000)
+                            .setTitle('❌ EQUIPO NO ENCONTRADO')
+                            .setDescription(`El equipo "${equipoNombre}" no existe`)
+                    ]
+                });
+            }
+
+            const players = Database.findTeamPlayers(team.name);
+            
             const embed = new EmbedBuilder()
                 .setColor(0x0066FF)
-                .setTitle(`🏆 ${equipoNombre.toUpperCase()}`)
+                .setTitle(`🏆 ${team.name.toUpperCase()}`)
                 .addFields(
-                    { name: '👑 DT', value: 'Por definir', inline: true },
-                    { name: '👥 Jugadores', value: '0', inline: true },
-                    { name: '📊 Partidos', value: '0W - 0D - 0L', inline: true },
-                    { name: '⭐ Estrellas', value: '★★☆☆☆', inline: true }
-                )
-                .setTimestamp();
+                    { name: '👥 Jugadores', value: players.length.toString(), inline: true },
+                    { name: '⭐ Puntaje', value: team.points?.toString() || '0', inline: true }
+                );
+
+            if (players.length > 0) {
+                const playersList = players.map((p, i) => `${i + 1}. ${p.name} (${p.goals || 0}G)`).join('\n');
+                embed.addFields({ name: '📋 Plantilla', value: playersList });
+            }
+
+            embed.setTimestamp();
             
-            await interaction.reply({ embeds: [embed] });
+            return await interaction.reply({ embeds: [embed] });
         } else {
             // Mostrar lista de equipos
             const embed = new EmbedBuilder()
                 .setColor(0x0066FF)
                 .setTitle('🏆 EQUIPOS REGISTRADOS')
-                .setDescription('Lista de equipos en la liga')
-                .addFields(
-                    { name: '1. Dragons', value: '👑 DT: Karmasv\n👥 8 jugadores', inline: false },
-                    { name: '2. Vikings', value: '👑 DT: Por asignar\n👥 5 jugadores', inline: false },
-                    { name: '3. Phoenix', value: '👑 DT: Por asignar\n👥 6 jugadores', inline: false }
-                )
-                .setTimestamp();
+                .setDescription(`Total: ${teams.length} equipos`);
+
+            teams.forEach(team => {
+                const playerCount = Database.findTeamPlayers(team.name).length;
+                embed.addFields({
+                    name: team.name,
+                    value: `👥 ${playerCount} jugadores | 📊 ${team.points || 0} puntos`,
+                    inline: false
+                });
+            });
+
+            embed.setTimestamp();
             
-            await interaction.reply({ embeds: [embed] });
+            return await interaction.reply({ embeds: [embed] });
         }
     }
 };

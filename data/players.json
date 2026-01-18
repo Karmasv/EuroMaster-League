@@ -1,3 +1,52 @@
 [
-  {"id": 1, "name": "Jugador Ejemplo", "team": "Equipo Ejemplo"}
+  {
+    "id": 1,
+    "name": "Cristiano",
+    "team": "Real Madrid Ecuador",
+    "goals": 12,
+    "assists": 5,
+    "yellowCards": 0,
+    "redCards": 0,
+    "joinedAt": "2026-01-15T20:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Messi",
+    "team": "Barcelona SC",
+    "goals": 10,
+    "assists": 8,
+    "yellowCards": 1,
+    "redCards": 0,
+    "joinedAt": "2026-01-14T19:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Benzema",
+    "team": "Real Madrid Ecuador",
+    "goals": 9,
+    "assists": 4,
+    "yellowCards": 0,
+    "redCards": 0,
+    "joinedAt": "2026-01-13T18:30:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Neymar",
+    "team": "Emelec Europa",
+    "goals": 8,
+    "assists": 6,
+    "yellowCards": 2,
+    "redCards": 0,
+    "joinedAt": "2026-01-12T17:45:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Lewandowski",
+    "team": "Barcelona SC",
+    "goals": 7,
+    "assists": 3,
+    "yellowCards": 0,
+    "redCards": 0,
+    "joinedAt": "2026-01-11T16:00:00Z"
+  }
 ]

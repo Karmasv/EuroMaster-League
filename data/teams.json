@@ -1,3 +1,30 @@
 [
-  {"id": 1, "name": "Equipo Ejemplo", "points": 0}
+  {
+    "id": 1,
+    "name": "Real Madrid Ecuador",
+    "city": "Quito",
+    "points": 6,
+    "founded": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Barcelona SC",
+    "city": "Guayaquil",
+    "points": 4,
+    "founded": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Emelec Europa",
+    "city": "Guayaquil",
+    "points": 2,
+    "founded": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": 4,
+    "name": "LDU Internacional",
+    "city": "Quito",
+    "points": 3,
+    "founded": "2026-01-01T00:00:00Z"
+  }
 ]

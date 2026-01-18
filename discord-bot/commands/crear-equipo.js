@@ -4,8 +4,8 @@ const PermissionManager = require('../utils/permissions');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('registrar_equipo')
-        .setDescription('Registrar un nuevo equipo')
+        .setName('crear-equipo')
+        .setDescription('Crear un nuevo equipo (solo managers)')
         .addStringOption(option =>
             option.setName('nombre')
                 .setDescription('Nombre del equipo')
@@ -16,10 +16,10 @@ module.exports = {
                 .setRequired(false)),
     
     async execute(interaction) {
-        // Verificar permisos
+        // Verificar permisos (solo managers y owners)
         if (!PermissionManager.hasAdminPermission(interaction.member)) {
             return await interaction.reply({
-                content: '❌ No tienes permisos para usar este comando',
+                content: '❌ Solo managers y owners pueden crear equipos',
                 ephemeral: true
             });
         }
@@ -36,7 +36,8 @@ module.exports = {
                         .setColor(0xFF0000)
                         .setTitle('❌ ERROR')
                         .setDescription(`El equipo "${nombre}" ya está registrado`)
-                ]
+                ],
+                ephemeral: true
             });
         }
 
@@ -44,6 +45,8 @@ module.exports = {
             id: teams.length + 1,
             name: nombre,
             city: ciudad,
+            manager: interaction.user.tag,
+            managerId: interaction.user.id,
             points: 0,
             founded: new Date().toISOString()
         };
@@ -53,13 +56,14 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor(0x00FF88)
-            .setTitle('✅ EQUIPO REGISTRADO')
+            .setTitle('✅ EQUIPO CREADO')
             .addFields(
                 { name: '🏆 Equipo', value: nombre, inline: true },
                 { name: '🏙️ Ciudad', value: ciudad, inline: true },
-                { name: '📅 Fecha', value: new Date().toLocaleDateString('es-ES'), inline: true }
+                { name: '👨‍💼 Manager', value: interaction.user.tag, inline: true },
+                { name: '📝 Siguiente Paso', value: 'Usa `/fichar` para agregar jugadores', inline: false }
             )
-            .setFooter({ text: `Registrado por ${interaction.user.tag}` })
+            .setFooter({ text: `Creado por ${interaction.user.tag}` })
             .setTimestamp();
         
         await interaction.reply({ embeds: [embed] });

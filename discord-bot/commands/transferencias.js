@@ -1,21 +1,50 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const Database = require('../utils/database');
+const PermissionManager = require('../utils/permissions');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('transferencias')
-        .setDescription('Muestra el mercado de transferencias'),
+        .setName('transferencia')
+        .setDescription('Registrar una transferencia de jugador')
+        .addStringOption(option =>
+            option.setName('jugador')
+                .setDescription('Nombre del jugador')
+                .setRequired(true))
+        .addStringOption(option =>
+            option.setName('equipo_origen')
+                .setDescription('Equipo de origen')
+                .setRequired(true))
+        .addStringOption(option =>
+            option.setName('equipo_destino')
+                .setDescription('Equipo de destino')
+                .setRequired(true)),
     
     async execute(interaction) {
+        // Verificar permisos
+        if (!PermissionManager.hasAdminPermission(interaction.member)) {
+            return await interaction.reply({
+                content: '❌ No tienes permisos para usar este comando',
+                ephemeral: true
+            });
+        }
+
+        const jugador = interaction.options.getString('jugador');
+        const origen = interaction.options.getString('equipo_origen');
+        const destino = interaction.options.getString('equipo_destino');
+
+        const result = Database.transferPlayer(jugador, origen, destino);
+
         const embed = new EmbedBuilder()
-            .setColor(0xFFAA00)
-            .setTitle('💰 MERCADO DE TRANSFERENCIAS')
-            .setDescription('Jugadores disponibles para transferencia')
+            .setColor(result.success ? 0x00FF88 : 0xFF0000)
+            .setTitle(result.success ? '✅ TRANSFERENCIA REGISTRADA' : '❌ ERROR')
+            .setDescription(result.message)
             .addFields(
-                { name: '⚽ Delantero Star', value: '💰 Valor: $500k\n🏆 Equipo: Dragons\n📊 Rating: 8.5', inline: false },
-                { name: '🛡️ Defensa Pro', value: '💰 Valor: $350k\n🏆 Equipo: Vikings\n📊 Rating: 7.8', inline: false },
-                { name: '🧤 Portero Elite', value: '💰 Valor: $450k\n🏆 Equipo: Phoenix\n📊 Rating: 8.2', inline: false }
+                { name: '👤 Jugador', value: jugador, inline: true },
+                { name: '➡️ De', value: origen, inline: true },
+                { name: '⬅️ Para', value: destino, inline: true },
+                { name: '📅 Fecha', value: new Date().toLocaleDateString('es-ES'), inline: true }
             )
-            .setFooter({ text: 'Usa /oferta para hacer una oferta' })
+            .setFooter({ text: `Registrado por ${interaction.user.tag}` })
             .setTimestamp();
         
         await interaction.reply({ embeds: [embed] });
