@@ -489,3 +489,83 @@ window.EML = {
 };
 
 console.log('EuroMaster League JS cargado correctamente.');
+// ============================================
+// FUNCIONES PARA GITHUB DB (WEB)
+// ============================================
+
+class WebDataManager {
+  constructor() {
+    this.baseURL = window.location.origin;
+  }
+
+  async getData(type) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/data?file=${type}`);
+      if (!response.ok) throw new Error('Error en API');
+      return await response.json();
+    } catch (error) {
+      console.error(`Error obteniendo ${type}:`, error);
+      return [];
+    }
+  }
+
+  async saveData(type, data) {
+    try {
+      const response = await fetch(`${this.baseURL}/api/data`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ collection: type, data })
+      });
+      
+      if (!response.ok) throw new Error('Error guardando datos');
+      return await response.json();
+    } catch (error) {
+      console.error(`Error guardando ${type}:`, error);
+      return { error: true, message: error.message };
+    }
+  }
+
+  // Métodos específicos para la liga
+  async getTeams() {
+    return await this.getData('teams');
+  }
+
+  async getMatches() {
+    return await this.getData('matches');
+  }
+
+  async getStandings() {
+    return await this.getData('standings');
+  }
+
+  async addTeam(teamData) {
+    const teams = await this.getTeams();
+    teamData.id = teams.length > 0 ? Math.max(...teams.map(t => t.id)) + 1 : 1;
+    teams.push(teamData);
+    return await this.saveData('teams', teams);
+  }
+
+  async updateMatch(matchId, result) {
+    const matches = await this.getMatches();
+    const matchIndex = matches.findIndex(m => m.id === matchId);
+    
+    if (matchIndex === -1) return { error: true, message: 'Partido no encontrado' };
+    
+    matches[matchIndex] = { ...matches[matchIndex], ...result };
+    return await this.saveData('matches', matches);
+  }
+}
+
+// Hacer disponible globalmente
+window.dataManager = new WebDataManager();
+
+// Ejemplo de uso automático al cargar
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('WebDataManager cargado');
+  
+  // Cargar datos de ejemplo si la página lo necesita
+  if (document.getElementById('teams-list')) {
+    const teams = await window.dataManager.getTeams();
+    console.log('Equipos cargados:', teams);
+  }
+});

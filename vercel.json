@@ -1,5 +1,37 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": ".",
+        "cleanUrls": true
+      }
+    }
+  ],
+  "routes": [
+    // Redirigir la raíz a index.html
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    // Servir páginas estáticas desde /pages
+    {
+      "src": "/(teams|matches|players|admin-panel|live|match-detail|stats|schedule|team-detail|standings)",
+      "dest": "/pages/$1.html"
+    },
+    // Servir archivos estáticos (CSS, JS, imágenes)
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml))",
+      "dest": "/$1"
+    },
+    // Para cualquier otra ruta, servir index.html (para rutas no encontradas)
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "trailingSlash": false,
+  "cleanUrls": true
 }

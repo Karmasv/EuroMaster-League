@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prueba Vercel</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Prueba de Rutas Vercel</h1>
+    
+    <h2>Páginas estáticas:</h2>
+    <ul>
+        <li><a href="/teams">/teams → pages/teams.html</a></li>
+        <li><a href="/matches">/matches → pages/matches.html</a></li>
+        <li><a href="/standings">/standings → pages/standings.html</a></li>
+    </ul>
+    
+    <h2>API de datos:</h2>
+    <button onclick="testAPI()">Probar API /api/data</button>
+    <div id="api-result"></div>
+    
+    <script>
+        async function testAPI() {
+            const resultEl = document.getElementById('api-result');
+            resultEl.innerHTML = 'Probando...';
+            
+            try {
+                const response = await fetch('/api/data?file=teams');
+                const data = await response.json();
+                resultEl.innerHTML = `<span class="success">✅ API funcionando. Equipos: ${data.length || 0}</span>`;
+            } catch (error) {
+                resultEl.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
