@@ -2,7 +2,7 @@
   "name": "euro-master-league",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'Build para archivos estáticos'"
+    "build": "echo 'Build completado'"
   },
   "dependencies": {
     "@octokit/rest": "^20.0.0"

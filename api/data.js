@@ -1,18 +1,24 @@
 const { Octokit } = require('@octokit/rest');
 
-// INICIALIZAR Octokit CON TOKEN CORRECTO
+// CONFIGURACIÓN
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = process.env.GITHUB_REPO || 'Karmasv/EuroMaster-League';
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
+
+if (!GITHUB_TOKEN) {
+  console.error('❌ GITHUB_TOKEN no está definido en las variables de entorno');
+}
+
+// Parsear owner/repo
+const [owner, repo] = GITHUB_REPO.split('/');
+
+// Inicializar Octokit
 const octokit = new Octokit({ 
-  auth: process.env.GITHUB_TOKEN  // ← TOKEN aquí, no el repo
+  auth: GITHUB_TOKEN
 });
 
-// OBTENER VARIABLES CORRECTAMENTE
-const repoInfo = process.env.GITHUB_REPO || 'Karmasv/EuroMaster-League';
-const owner = repoInfo.split('/')[0];      // "Karmasv"
-const repo = repoInfo.split('/')[1];       // "EuroMaster-League"
-const branch = process.env.GITHUB_BRANCH || 'main';
-
-// COLECCIONES DE DATOS
-const collections = {
+// Mapeo de archivos
+const FILE_MAP = {
   teams: 'data/teams.json',
   players: 'data/players.json',
   matches: 'data/matches.json',
@@ -20,103 +26,139 @@ const collections = {
 };
 
 module.exports = async (req, res) => {
-  // CONFIGURAR CORS
+  // Configurar CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PATCH,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  // MANEJAR PREFLIGHT
+  // Manejar preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
   try {
-    // --- GET: LEER DATOS ---
+    // --- GET: Leer datos ---
     if (req.method === 'GET') {
       const { file } = req.query;
       
-      if (!file || !collections[file]) {
+      if (!file || !FILE_MAP[file]) {
         return res.status(400).json({ 
-          error: 'Archivo no válido',
-          available: Object.keys(collections) 
+          error: 'Parámetro "file" requerido o inválido',
+          available: Object.keys(FILE_MAP),
+          example: '/api/data?file=teams'
         });
       }
 
+      console.log(`📥 GET ${file} desde GitHub...`);
+
       try {
-        // LEER ARCHIVO DE GITHUB
         const { data } = await octokit.repos.getContent({
           owner,
           repo,
-          path: collections[file],
-          ref: branch
+          path: FILE_MAP[file],
+          ref: GITHUB_BRANCH
         });
 
-        // DECODIFICAR BASE64
+        // Decodificar base64
         const content = Buffer.from(data.content, 'base64').toString('utf8');
-        return res.status(200).json(JSON.parse(content));
+        const jsonData = JSON.parse(content);
         
+        console.log(`✅ ${file} obtenido: ${jsonData.length || 0} registros`);
+        return res.status(200).json(jsonData);
+
       } catch (error) {
         if (error.status === 404) {
-          // ARCHIVO NO EXISTE → DEVOLVER ARRAY VACÍO
+          console.log(`📭 ${file} no encontrado, devolviendo array vacío`);
           return res.status(200).json([]);
         }
-        throw error;
+        
+        console.error(`❌ Error obteniendo ${file}:`, error.message);
+        return res.status(500).json({ 
+          error: 'Error al obtener datos de GitHub',
+          details: error.message 
+        });
       }
     }
-    
-    // --- POST: ESCRIBIR DATOS (desde web) ---
+
+    // --- POST: Escribir datos ---
     if (req.method === 'POST') {
       const { collection, data } = req.body;
       
-      if (!collection || !collections[collection]) {
+      if (!collection || !FILE_MAP[collection]) {
         return res.status(400).json({ 
-          error: 'Colección no válida',
-          available: Object.keys(collections) 
+          error: 'Parámetro "collection" requerido o inválido',
+          available: Object.keys(FILE_MAP)
         });
       }
 
-      const content = JSON.stringify(data, null, 2);
-      const contentEncoded = Buffer.from(content).toString('base64');
-      
-      // OBTENER SHA SI EXISTE
-      let sha = null;
+      if (!data) {
+        return res.status(400).json({ error: 'Parámetro "data" requerido' });
+      }
+
+      console.log(`📤 POST ${collection} a GitHub...`);
+
       try {
-        const existing = await octokit.repos.getContent({
+        const content = JSON.stringify(data, null, 2);
+        const contentEncoded = Buffer.from(content).toString('base64');
+
+        // Obtener SHA si existe
+        let sha = null;
+        try {
+          const existing = await octokit.repos.getContent({
+            owner,
+            repo,
+            path: FILE_MAP[collection],
+            ref: GITHUB_BRANCH
+          });
+          sha = existing.data.sha;
+          console.log(`📝 Actualizando ${collection} existente`);
+        } catch (e) {
+          console.log(`📄 Creando nuevo archivo ${collection}`);
+        }
+
+        // Subir a GitHub
+        await octokit.repos.createOrUpdateFileContents({
           owner,
           repo,
-          path: collections[collection],
-          ref: branch
+          path: FILE_MAP[collection],
+          message: `Actualizar ${collection} desde EuroMaster League`,
+          content: contentEncoded,
+          branch: GITHUB_BRANCH,
+          sha: sha,
+          committer: {
+            name: 'EuroMaster League Bot',
+            email: 'bot@euromasterleague.com'
+          }
         });
-        sha = existing.data.sha;
-      } catch (e) {
-        // Archivo no existe (se creará nuevo)
+
+        console.log(`✅ ${collection} actualizado en GitHub`);
+        return res.status(200).json({ 
+          success: true, 
+          message: `Datos de ${collection} actualizados correctamente`,
+          records: Array.isArray(data) ? data.length : 1
+        });
+
+      } catch (error) {
+        console.error(`❌ Error actualizando ${collection}:`, error.message);
+        return res.status(500).json({ 
+          error: 'Error al actualizar datos en GitHub',
+          details: error.message,
+          status: error.status
+        });
       }
-
-      // ACTUALIZAR EN GITHUB
-      await octokit.repos.createOrUpdateFileContents({
-        owner,
-        repo,
-        path: collections[collection],
-        message: `Update ${collection} from web interface`,
-        content: contentEncoded,
-        branch,
-        sha
-      });
-
-      return res.status(200).json({ 
-        success: true, 
-        message: 'Datos actualizados en GitHub' 
-      });
     }
 
-    // MÉTODO NO PERMITIDO
-    return res.status(405).json({ error: 'Método no permitido' });
+    // Método no soportado
+    return res.status(405).json({ 
+      error: 'Método no permitido',
+      allowed: ['GET', 'POST', 'OPTIONS'] 
+    });
 
   } catch (error) {
-    console.error('❌ API Error:', error.message);
+    console.error('❌ Error general en API:', error);
     return res.status(500).json({ 
-      error: 'Error del servidor',
+      error: 'Error interno del servidor',
       details: error.message 
     });
   }

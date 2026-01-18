@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px; margin: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Test API EuroMaster League</h1>
+    
+    <button onclick="testDebug()">1. Test Debug</button>
+    <button onclick="testTeams()">2. Test Teams</button>
+    <button onclick="testCreate()">3. Test Crear</button>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+    
+    <script>
+        const resultEl = document.getElementById('result');
+        
+        async function testDebug() {
+            resultEl.innerHTML = 'Probando /api/debug...';
+            try {
+                const res = await fetch('/api/debug');
+                const data = await res.json();
+                resultEl.innerHTML = `<div class="success">
+                    <h3>✅ Debug Funciona</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                </div>`;
+            } catch (error) {
+                resultEl.innerHTML = `<div class="error">
+                    <h3>❌ Debug Falló</h3>
+                    <p>${error.message}</p>
+                </div>`;
+            }
+        }
+        
+        async function testTeams() {
+            resultEl.innerHTML = 'Probando /api/data?file=teams...';
+            try {
+                const res = await fetch('/api/data?file=teams');
+                const data = await res.json();
+                resultEl.innerHTML = `<div class="success">
+                    <h3>✅ Teams Funciona</h3>
+                    <p>Equipos obtenidos: ${data.length}</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                </div>`;
+            } catch (error) {
+                resultEl.innerHTML = `<div class="error">
+                    <h3>❌ Teams Falló</h3>
+                    <p>${error.message}</p>
+                </div>`;
+            }
+        }
+        
+        async function testCreate() {
+            resultEl.innerHTML = 'Probando creación...';
+            try {
+                const res = await fetch('/api/data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        collection: 'teams',
+                        data: [{ id: 99, name: 'Test Team', points: 0 }]
+                    })
+                });
+                const data = await res.json();
+                resultEl.innerHTML = `<div class="success">
+                    <h3>✅ Creación Funciona</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                </div>`;
+            } catch (error) {
+                resultEl.innerHTML = `<div class="error">
+                    <h3>❌ Creación Falló</h3>
+                    <p>${error.message}</p>
+                </div>`;
+            }
+        }
+    </script>
+</body>
+</html>
