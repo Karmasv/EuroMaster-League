@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Simple</title>
+    <script>
+        async function test() {
+            const res = await fetch('/api/data?file=teams');
+            const data = await res.json();
+            document.body.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+        test().catch(e => document.body.innerHTML = `Error: ${e}`);
+    </script>
+</head>
+<body>Loading...</body>
+</html>

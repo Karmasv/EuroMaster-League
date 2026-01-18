@@ -59,6 +59,14 @@
       "dest": "/pages/match-detail.html"
     },
     {
+      "src": "/test-vercel.html",
+      "dest": "/test-vercel.html"
+    },
+    {
+      "src": "/test-minimal.html",
+      "dest": "/test-minimal.html"
+    },
+    {
       "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml))",
       "dest": "/$1"
     },
