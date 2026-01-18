@@ -1356,6 +1356,57 @@ body {
     }
 }
 
+/* === PAGE HEADER === */
+.page-header {
+    padding: 80px 2rem 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* === TEAMS GRID === */
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.teams-loading,
+.matches-loading,
+.players-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 /* === UTILITY CLASSES === */
 .text-center { text-align: center; }
 .text-gradient {
