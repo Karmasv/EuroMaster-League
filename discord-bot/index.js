@@ -52,6 +52,8 @@ for (const file of commandFiles) {
         }
     } catch (error) {
         console.log(`  ❌ ${file}: ${error.message}`);
+        // Continuar cargando otros comandos aunque haya error
+        continue;
     }
 }
 // Añade esto después de cargar los comandos

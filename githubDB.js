@@ -2,7 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const { Octokit } = require('@octokit/rest');
+
+let Octokit;
+try {
+  Octokit = require('@octokit/rest').Octokit;
+} catch (error) {
+  console.warn('⚠️ @octokit/rest no disponible, usando base de datos local');
+  Octokit = null;
+}
 
 class GitHubDB {
   constructor() {
@@ -12,7 +19,9 @@ class GitHubDB {
     this.owner = this.repo.split('/')[0];
     this.repoName = this.repo.split('/')[1];
     
-    this.octokit = new Octokit({ auth: this.token });
+    // Solo crear octokit si el módulo está disponible
+    this.octokit = Octokit ? new Octokit({ auth: this.token }) : null;
+    this.useLocalDB = !Octokit;
     
     // Mapeo de colecciones a archivos
     this.collections = {
@@ -29,6 +38,11 @@ class GitHubDB {
     try {
       if (!this.collections[collection]) {
         throw new Error(`Colección no válida: ${collection}`);
+      }
+
+      // Si no tenemos Octokit, usar base de datos local
+      if (this.useLocalDB) {
+        return this._getLocal(collection);
       }
 
       const filePath = this.collections[collection];
@@ -137,6 +151,21 @@ class GitHubDB {
     
     await this.set(collection, filtered);
     return true;
+  }
+
+  // Método para obtener datos de forma local (fallback)
+  _getLocal(collection) {
+    try {
+      const filePath = path.join(__dirname, this.collections[collection]);
+      if (fs.existsSync(filePath)) {
+        const data = fs.readFileSync(filePath, 'utf8');
+        return JSON.parse(data);
+      }
+      return [];
+    } catch (error) {
+      console.warn(`⚠️ No se pudo leer ${collection} localmente:`, error.message);
+      return [];
+    }
   }
 }
 
