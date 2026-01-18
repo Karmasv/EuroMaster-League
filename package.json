@@ -2,10 +2,7 @@
   "name": "euro-master-league",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'Build complete'"
-  },
-  "dependencies": {
-    "@octokit/rest": "^20.0.0"
+    "build": "echo 'Build step: no se necesita build para archivos estáticos'"
   },
   "devDependencies": {
     "@vercel/static-build": "^1.0.0"

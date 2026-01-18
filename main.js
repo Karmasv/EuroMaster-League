@@ -1,35 +1,31 @@
-// EuroMaster League - Main JS
 console.log('EuroMaster League cargado');
 
+// Navegación activa
 document.addEventListener('DOMContentLoaded', function() {
-    // Navegación activa
     const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (currentPath === linkPath) {
             link.classList.add('active');
+        } else {
+            link.classList.remove('active');
         }
     });
     
-    // Cargar datos si existe API
-    if (typeof fetch !== 'undefined') {
-        loadInitialData();
-    }
+    // Cargar datos si hay API
+    loadData();
 });
 
-async function loadInitialData() {
+async function loadData() {
     try {
         const response = await fetch('/api/data?file=teams');
         if (response.ok) {
             const teams = await response.json();
-            console.log(`${teams.length} equipos cargados`);
+            console.log('Equipos cargados:', teams.length);
         }
     } catch (error) {
         console.log('Modo demostración - API disponible pronto');
     }
 }
-
-// API Helper
-window.EML_API = {
-    getTeams: () => fetch('/api/data?file=teams').then(r => r.json()),
-    getStandings: () => fetch('/api/data?file=standings').then(r => r.json())
-};

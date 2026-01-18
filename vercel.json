@@ -2,26 +2,17 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "**/*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "**/*.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "**/*.js",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "."
+      }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/\$1"
+      "dest": "/api/$1"
     },
     {
       "src": "/teams",
@@ -62,6 +53,10 @@
     {
       "src": "/match-detail",
       "dest": "/pages/match-detail.html"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff2|ttf|eot))",
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",
