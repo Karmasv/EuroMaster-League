@@ -3,138 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuroMaster League - La élite del Haxball Ecuatoriano</title>
+    <title>EuroMaster League - Liga Ecuatoriana de Haxball</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
 <body>
-    <!-- HEADER -->
     <header class="site-header">
-        <div class="header-container">
-            <div class="logo-container">
-                <div class="logo-placeholder">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
                     <i class="fas fa-trophy"></i>
-                    <small>LOGO AQUÍ</small>
                 </div>
                 <div class="logo-text">
                     <h1>EUROMASTER LEAGUE</h1>
-                    <p class="tagline">Liga Ecuatoriana de Haxball con Alma Europea</p>
+                    <p>Liga Ecuatoriana | Alma Europea</p>
                 </div>
             </div>
-            
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/" class="nav-link active"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="/teams" class="nav-link"><i class="fas fa-users"></i> Equipos</a></li>
-                    <li><a href="/matches" class="nav-link"><i class="fas fa-futbol"></i> Partidos</a></li>
-                    <li><a href="/standings" class="nav-link"><i class="fas fa-list-ol"></i> Clasificación</a></li>
-                    <li><a href="/stats" class="nav-link"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-                    <li><a href="/live" class="nav-link"><i class="fas fa-video"></i> En Vivo</a></li>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="/teams"><i class="fas fa-users"></i> Equipos</a></li>
+                    <li><a href="/matches"><i class="fas fa-futbol"></i> Partidos</a></li>
+                    <li><a href="/standings"><i class="fas fa-list-ol"></i> Clasificación</a></li>
+                    <li><a href="/live"><i class="fas fa-video"></i> En Vivo</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">EUROMASTER LEAGUE</h1>
-            <p class="hero-subtitle">La máxima competencia de Haxball en Ecuador • Inspiración Europea • Competitividad Élite</p>
-            <div class="cta-buttons">
-                <a href="/standings" class="btn btn-primary"><i class="fas fa-table"></i> Ver Clasificación</a>
-                <a href="/live" class="btn btn-secondary"><i class="fas fa-play-circle"></i> Próximos Partidos</a>
-            </div>
+    <section class="hero">
+        <h1>EUROMASTER LEAGUE</h1>
+        <p>La élite del Haxball Ecuatoriano con inspiración en las grandes ligas europeas</p>
+        <div class="hero-buttons">
+            <a href="/standings" class="btn btn-primary"><i class="fas fa-table"></i> Ver Clasificación</a>
+            <a href="/teams" class="btn btn-secondary"><i class="fas fa-users"></i> Ver Equipos</a>
         </div>
     </section>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
-        <!-- CARACTERÍSTICAS -->
-        <section class="features-section">
-            <h2 class="section-title">La Liga Más Competitiva</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="card-icon">
-                        <i class="fas fa-globe-europe"></i>
-                    </div>
-                    <h3>Temática Europea</h3>
-                    <p>Inspirada en las grandes ligas europeas con identidad ecuatoriana. Lo mejor de ambos mundos.</p>
+    <main class="container">
+        <div class="page-content">
+            <h2><i class="fas fa-flag"></i> Liga Ecuatoriana con Temática Europea</h2>
+            <p>La EuroMaster League combina la pasión del fútbol ecuatoriano con la tradición y competitividad de las ligas europeas.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="background: rgba(0, 51, 153, 0.2); padding: 1.5rem; border-radius: 10px;">
+                    <h3><i class="fas fa-trophy"></i> Competitividad Élite</h3>
+                    <p>Los mejores jugadores de Haxball de Ecuador compiten por el título supremo.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="card-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3>Competitividad Élite</h3>
-                    <p>Los mejores equipos y jugadores de Haxball de Ecuador compitiendo por el título supremo.</p>
+                <div style="background: rgba(218, 41, 28, 0.2); padding: 1.5rem; border-radius: 10px;">
+                    <h3><i class="fas fa-chart-line"></i> Estadísticas en Vivo</h3>
+                    <p>Seguimiento detallado de estadísticas y rendimiento en tiempo real.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="card-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Estadísticas en Vivo</h3>
-                    <p>Seguimiento detallado de estadísticas, rendimiento y análisis táctico en tiempo real.</p>
+                <div style="background: rgba(255, 215, 0, 0.2); padding: 1.5rem; border-radius: 10px;">
+                    <h3><i class="fas fa-globe-europe"></i> Inspiración Europea</h3>
+                    <p>Sistema competitivo inspirado en las grandes ligas europeas de fútbol.</p>
                 </div>
             </div>
-        </section>
-
-        <!-- PRÓXIMOS ENCUENTROS -->
-        <section class="matches-section">
-            <h2 class="section-title">Próximos Encuentros</h2>
-            <div class="page-content">
-                <div class="coming-soon">
-                    <div class="coming-soon-icon">
-                        <i class="fas fa-calendar-plus"></i>
-                    </div>
-                    <h3>Temporada en Preparación</h3>
-                    <p>La primera temporada de la EuroMaster League está en fase de organización.</p>
-                    <p><strong>Pronto anunciaremos equipos, calendario y sistema de competencia.</strong></p>
-                    <a href="/schedule" class="btn btn-primary" style="margin-top: 1rem;">Ver Calendario</a>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="logo-container">
-                    <div class="logo-placeholder">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="logo-text">
-                        <h3>EUROMASTER LEAGUE</h3>
-                    </div>
-                </div>
-                <p>Liga ecuatoriana de Haxball con inspiración en las grandes ligas europeas.</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Enlaces Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="/teams">Equipos</a></li>
-                    <li><a href="/matches">Partidos</a></li>
-                    <li><a href="/standings">Clasificación</a></li>
-                    <li><a href="/stats">Estadísticas</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contacto</h3>
-                <ul class="footer-links">
-                    <li><i class="fab fa-discord"></i> Discord: EML_Official</li>
-                    <li><i class="fas fa-envelope"></i> contacto@euromasterleague.ec</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>&copy; 2024 EuroMaster League. Todos los derechos reservados.</p>
-            <p>Liga Ecuatoriana de Haxball • Orgullosamente hecho en Ecuador con inspiración Europea</p>
-        </div>
+        <p>&copy; 2024 EuroMaster League - Liga Ecuatoriana de Haxball</p>
+        <p><i class="fas fa-map-marker-alt"></i> Ecuador | <i class="fas fa-heart"></i> Pasión por el Haxball</p>
     </footer>
 
     <script src="main.js"></script>

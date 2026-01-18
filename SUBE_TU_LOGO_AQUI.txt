@@ -1,0 +1,28 @@
+=== INSTRUCCIONES PARA EL LOGO ===
+
+1. PREPARA TU LOGO:
+   - Formato: PNG, JPG o SVG
+   - Tamaño recomendado: 512x512 píxeles
+   - Nombre: logo.png
+
+2. SÚBELO A:
+   /assets/img/logo.png
+
+3. COMO HACERLO:
+   Opción A (Recomendada):
+   - Ve a la carpeta 'assets/img/' en tu Codespace
+   - Arrastra tu archivo de logo ahí
+   
+   Opción B (Terminal):
+   cp /ruta/de/tu/logo.png /workspaces/EuroMaster-League/assets/img/logo.png
+
+4. VERIFICA:
+   - El logo aparecerá automáticamente en el sitio
+   - Si no se ve, actualiza la página (Ctrl+F5)
+
+5. ESTRUCTURA FINAL:
+   assets/
+   ├── img/logo.png       (tu logo aquí)
+   ├── img/favicon.ico    (opcional)
+   ├── css/               (estilos extra)
+   └── js/                (scripts extra)
