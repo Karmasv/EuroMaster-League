@@ -3,256 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuroMaster League - Liga Ecuatoriana de Haxball</title>
+    <title>EuroMaster League | Elite Haxball Competition</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- HEADER FIJADO -->
-    <header class="site-header">
-        <div class="header-container">
-            <div class="logo-container">
-                <div class="logo-box">
-                    <i class="fas fa-crown"></i>
+    <!-- Background Effects -->
+    <div class="bg-animation">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="grid-pattern"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-emblem">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="20" cy="20" r="8" fill="currentColor"/>
+                    </svg>
                 </div>
                 <div class="logo-text">
-                    <h1>EUROMASTER LEAGUE</h1>
-                    <p style="font-size: 12px; color: #aaa; letter-spacing: 2px;">ECUADOR | EUROPA</p>
+                    <span class="logo-title">EUROMASTER</span>
+                    <span class="logo-subtitle">LEAGUE</span>
                 </div>
             </div>
-            
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="/" class="active"><i class="fas fa-home"></i> INICIO</a></li>
-                    <li><a href="/teams"><i class="fas fa-users"></i> EQUIPOS</a></li>
-                    <li><a href="/matches"><i class="fas fa-futbol"></i> PARTIDOS</a></li>
-                    <li><a href="/standings"><i class="fas fa-list-ol"></i> CLASIFICACIÓN</a></li>
-                    <li><a href="/stats"><i class="fas fa-chart-bar"></i> ESTADÍSTICAS</a></li>
-                    <li><a href="/live"><i class="fas fa-video"></i> EN VIVO</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero-section">
-        <div class="header-container">
-            <h1 class="hero-title">EUROMASTER LEAGUE 2026</h1>
-            <p class="hero-subtitle">
-                La máxima competencia de Haxball en Ecuador. Donde la pasión latinoamericana 
-                se fusiona con la tradición y competitividad de las grandes ligas europeas. 
-                Sigue cada jugada, cada gol, cada emoción en tiempo real.
-            </p>
-            
-            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 40px;">
-                <a href="/standings" class="btn btn-primary">
-                    <i class="fas fa-table"></i> VER CLASIFICACIÓN
-                </a>
-                <a href="/matches" class="btn btn-secondary">
-                    <i class="fas fa-calendar-alt"></i> CALENDARIO
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link active">Inicio</a>
+                <a href="matches.html" class="nav-link">Partidos</a>
+                <a href="standings.html" class="nav-link">Clasificación</a>
+                <a href="teams.html" class="nav-link">Equipos</a>
+                <a href="players.html" class="nav-link">Jugadores</a>
+                <a href="live.html" class="nav-link nav-link-live">
+                    <span class="live-indicator"></span>
+                    EN VIVO
                 </a>
             </div>
-            
-            <!-- ESTADÍSTICAS RÁPIDAS -->
-            <div style="display: flex; justify-content: center; gap: 40px; margin-top: 60px;">
-                <div style="text-align: center;">
-                    <div style="font-size: 36px; font-weight: 900; color: #d4af37;">16</div>
-                    <div style="font-size: 14px; color: #aaa; text-transform: uppercase;">EQUIPOS</div>
+
+            <div class="nav-actions">
+                <a href="https://discord.gg/euromaster" class="btn-icon" target="_blank" title="Discord">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                </a>
+                <a href="admin.html" class="btn-primary">Admin Panel</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    TEMPORADA 2026 EN VIVO
                 </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 36px; font-weight: 900; color: #d4af37;">240</div>
-                    <div style="font-size: 14px; color: #aaa; text-transform: uppercase;">PARTIDOS</div>
+                <h1 class="hero-title">
+                    LA ÉLITE DEL
+                    <span class="gradient-text">HAXBALL EUROPEO</span>
+                </h1>
+                <p class="hero-description">
+                    Experimenta la competición más profesional de Haxball. Estadísticas en tiempo real, 
+                    streaming de alta calidad y gestión profesional de torneos.
+                </p>
+                <div class="hero-actions">
+                    <a href="live.html" class="btn-hero btn-hero-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        VER EN DIRECTO
+                    </a>
+                    <a href="standings.html" class="btn-hero btn-hero-secondary">
+                        VER CLASIFICACIÓN
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 36px; font-weight: 900; color: #d4af37;">720+</div>
-                    <div style="font-size: 14px; color: #aaa; text-transform: uppercase;">GOLES</div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalTeams">16</span>
+                        <span class="stat-label">Equipos</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalPlayers">128</span>
+                        <span class="stat-label">Jugadores</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalMatches">84</span>
+                        <span class="stat-label">Partidos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-text">
+                        <div class="card-title">Champions</div>
+                        <div class="card-subtitle">16 Equipos</div>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-text">
+                        <div class="card-title">En Vivo</div>
+                        <div class="card-subtitle">Stream 24/7</div>
+                    </div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">📊</div>
+                    <div class="card-text">
+                        <div class="card-title">Stats</div>
+                        <div class="card-subtitle">Tiempo Real</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TABLA DE CLASIFICACIÓN -->
-    <section class="league-section">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-trophy"></i>
-                CLASIFICACIÓN - PRIMERA DIVISIÓN
-            </h2>
-            <a href="/standings" class="btn btn-secondary" style="font-size: 14px;">
-                VER COMPLETA <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-        
-        <div class="table-container">
-            <table class="stats-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>EQUIPO</th>
-                        <th>PJ</th>
-                        <th>G</th>
-                        <th>E</th>
-                        <th>P</th>
-                        <th>GF</th>
-                        <th>GC</th>
-                        <th>DG</th>
-                        <th>PTS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="font-weight: 900; color: #d4af37;">1</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 30px; height: 30px; background: rgba(212,175,55,0.2); 
-                                     border-radius: 50%; display: grid; place-items: center; font-weight: 900;">R</div>
-                                <div>
-                                    <div style="font-weight: 700;">Real Madrid Ecuador</div>
-                                    <div style="font-size: 12px; color: #aaa;">Quito</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                        <td style="font-weight: 900;">0</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 900; color: #aaa;">2</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 30px; height: 30px; background: rgba(230,57,70,0.2); 
-                                     border-radius: 50%; display: grid; place-items: center; font-weight: 900;">B</div>
-                                <div>
-                                    <div style="font-weight: 700;">Barcelona SC</div>
-                                    <div style="font-size: 12px; color: #aaa;">Guayaquil</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                        <td style="font-weight: 900;">0</td>
-                    </tr>
-                    <!-- Más filas según necesites -->
-                </tbody>
-            </table>
-        </div>
-    </section>
+    <!-- Featured Match -->
+    <section class="featured-match">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Partido Destacado</h2>
+                <a href="matches.html" class="section-link">
+                    Ver todos
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
 
-    <!-- PRÓXIMOS PARTIDOS -->
-    <section class="league-section">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-futbol"></i>
-                PRÓXIMOS ENCUENTROS
-            </h2>
-            <a href="/matches" class="btn btn-secondary" style="font-size: 14px;">
-                CALENDARIO <i class="fas fa-calendar-alt"></i>
-            </a>
-        </div>
-        
-        <div class="matches-grid">
-            <!-- PARTIDO 1 -->
-            <div class="match-card">
-                <div class="match-header">
-                    <span style="font-weight: 700; color: #d4af37; font-size: 14px;">EML I • JORNADA 1</span>
-                    <span style="color: #aaa; font-size: 14px;">25 ENE 2026 • 20:00</span>
+            <div class="match-showcase">
+                <div class="match-info-bar">
+                    <span class="match-league">EML SEASON 1 - JORNADA 8</span>
+                    <span class="match-time">
+                        <span class="time-dot"></span>
+                        HOY • 20:00 CET
+                    </span>
                 </div>
+
                 <div class="match-teams">
-                    <div class="team">
+                    <div class="team team-home">
                         <div class="team-logo">
-                            <i class="fas fa-shield-alt"></i>
+                            <img src="https://via.placeholder.com/120/6366f1/ffffff?text=DRG" alt="Dragons">
                         </div>
-                        <div class="team-name">Real Madrid EC</div>
+                        <div class="team-details">
+                            <h3 class="team-name">DRAGONS</h3>
+                            <div class="team-record">
+                                <span class="record-wins">5 V</span>
+                                <span class="record-sep">-</span>
+                                <span class="record-draws">1 E</span>
+                                <span class="record-sep">-</span>
+                                <span class="record-losses">2 D</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">
-                            <i class="fas fa-dragon"></i>
+
+                    <div class="match-vs">
+                        <div class="vs-badge">VS</div>
+                        <div class="match-countdown" id="countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="hours">04</span>
+                                <span class="countdown-label">Horas</span>
+                            </div>
+                            <span class="countdown-sep">:</span>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="minutes">32</span>
+                                <span class="countdown-label">Minutos</span>
+                            </div>
+                            <span class="countdown-sep">:</span>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="seconds">15</span>
+                                <span class="countdown-label">Segundos</span>
+                            </div>
                         </div>
-                        <div class="team-name">Barcelona SC</div>
+                    </div>
+
+                    <div class="team team-away">
+                        <div class="team-details">
+                            <h3 class="team-name">VIKINGS</h3>
+                            <div class="team-record">
+                                <span class="record-wins">6 V</span>
+                                <span class="record-sep">-</span>
+                                <span class="record-draws">0 E</span>
+                                <span class="record-sep">-</span>
+                                <span class="record-losses">2 D</span>
+                            </div>
+                        </div>
+                        <div class="team-logo">
+                            <img src="https://via.placeholder.com/120/f97316/ffffff?text=VIK" alt="Vikings">
+                        </div>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="#" class="btn btn-secondary" style="font-size: 14px; padding: 10px 20px;">
-                        <i class="fas fa-info-circle"></i> DETALLES
+
+                <div class="match-actions">
+                    <a href="live.html" class="btn-match btn-match-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                        VER STREAM
+                    </a>
+                    <a href="#" class="btn-match btn-match-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                        DETALLES DEL PARTIDO
                     </a>
                 </div>
             </div>
-            
-            <!-- PARTIDO 2 -->
-            <div class="match-card">
-                <div class="match-header">
-                    <span style="font-weight: 700; color: #d4af37; font-size: 14px;">EML I • JORNADA 1</span>
-                    <span style="color: #aaa; font-size: 14px;">26 ENE 2026 • 19:00</span>
+        </div>
+    </section>
+
+    <!-- Standings Preview -->
+    <section class="standings-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Clasificación</h2>
+                <a href="standings.html" class="section-link">
+                    Tabla completa
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="standings-table">
+                <div class="table-header">
+                    <div class="col-pos">#</div>
+                    <div class="col-team">EQUIPO</div>
+                    <div class="col-stat">PJ</div>
+                    <div class="col-stat">G</div>
+                    <div class="col-stat">E</div>
+                    <div class="col-stat">P</div>
+                    <div class="col-stat">GF</div>
+                    <div class="col-stat">GC</div>
+                    <div class="col-stat">DIF</div>
+                    <div class="col-pts">PTS</div>
+                    <div class="col-form">FORMA</div>
                 </div>
-                <div class="match-teams">
-                    <div class="team">
-                        <div class="team-logo">
-                            <i class="fas fa-lion"></i>
-                        </div>
-                        <div class="team-name">Emelec Europa</div>
+
+                <div class="table-body" id="standingsTableBody">
+                    <div class="table-loading">
+                        <div class="loader"></div>
+                        <p>Cargando clasificación...</p>
                     </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">
-                            <i class="fas fa-anchor"></i>
-                        </div>
-                        <div class="team-name">LDU Internacional</div>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="#" class="btn btn-secondary" style="font-size: 14px; padding: 10px 20px;">
-                        <i class="fas fa-info-circle"></i> DETALLES
-                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
+    <!-- Recent Matches -->
+    <section class="recent-matches">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Últimos Resultados</h2>
+                <a href="matches.html" class="section-link">
+                    Ver todos
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="matches-grid" id="recentMatchesGrid">
+                <div class="matches-loading">
+                    <div class="loader"></div>
+                    <p>Cargando partidos...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Players -->
+    <section class="top-players">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Jugadores Destacados</h2>
+                <a href="players.html" class="section-link">
+                    Ver ranking completo
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="players-grid" id="topPlayersGrid">
+                <div class="players-loading">
+                    <div class="loader"></div>
+                    <p>Cargando jugadores...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <div class="logo-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
-                        <i class="fas fa-crown"></i>
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <path d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="20" r="8" fill="currentColor"/>
+                        </svg>
                     </div>
-                    <h3>EUROMASTER LEAGUE</h3>
-                    <p style="color: #aaa; line-height: 1.6; font-size: 14px;">
-                        La máxima competición de Haxball en Ecuador, 
-                        fusionando la pasión latinoamericana con la 
-                        tradición futbolística europea.
-                    </p>
+                    <div>
+                        <h3 class="footer-title">EUROMASTER LEAGUE</h3>
+                        <p class="footer-tagline">La liga profesional de Haxball más competitiva de Europa.</p>
+                    </div>
                 </div>
-                
-                <div class="footer-section">
-                    <h3>COMPETICIÓN</h3>
-                    <ul class="footer-links">
-                        <li><a href="/standings">Clasificación</a></li>
-                        <li><a href="/matches">Calendario</a></li>
-                        <li><a href="/teams">Equipos</a></li>
-                        <li><a href="/stats">Estadísticas</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>CONTACTO</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fab fa-discord"></i> Discord: EML_Oficial</a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i> @EuroMasterLeague</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> info@euromasterleague.ec</a></li>
-                    </ul>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Competición</h4>
+                        <a href="standings.html">Clasificación</a>
+                        <a href="matches.html">Partidos</a>
+                        <a href="teams.html">Equipos</a>
+                        <a href="players.html">Jugadores</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">En Vivo</h4>
+                        <a href="live.html">Stream Principal</a>
+                        <a href="#">Calendario</a>
+                        <a href="#">Resultados</a>
+                        <a href="#">Highlights</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Información</h4>
+                        <a href="#">Reglamento</a>
+                        <a href="#">FAQ</a>
+                        <a href="#">Contacto</a>
+                        <a href="admin.html">Panel Admin</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Comunidad</h4>
+                        <a href="https://discord.gg/euromaster" target="_blank">Discord</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">YouTube</a>
+                        <a href="#">Instagram</a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="copyright">
-                <p>&copy; 2026 EUROMASTER LEAGUE. LIGA ECUATORIANA DE HAXBALL.</p>
-                <p style="margin-top: 10px; font-size: 12px;">INSPIRADO EN LAS GRANDES LIGAS EUROPEAS • DESARROLLADO EN ECUADOR</p>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 EuroMaster League. Todos los derechos reservados.</p>
+                <p class="footer-disclaimer">Liga competitiva de Haxball. No afiliada a Haxball.com</p>
             </div>
         </div>
     </footer>
 
-    <!-- SCRIPT -->
     <script src="main.js"></script>
 </body>
 </html>
