@@ -1,0 +1,13 @@
+{
+  "name": "euromaster-league-web",
+  "version": "1.0.0",
+  "description": "EuroMaster League Haxball - Website",
+  "scripts": {
+    "dev": "npx serve frontend -s",
+    "start": "npx serve frontend -s -l 3000",
+    "build": "echo 'Static site - no build required'"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}
