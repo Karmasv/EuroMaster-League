@@ -15,9 +15,7 @@
   ],
   "routes": [
     {"src": "/api/(.*)", "dest": "/api/$1"},
-    {"src": "/teams", "dest": "/index.html"},
-    {"src": "/matches", "dest": "/index.html"},
-    {"src": "/standings", "dest": "/index.html"},
-    {"src": "/(.*)", "dest": "/index.html"}
+    {"src": "/(?!api|styles\\.css|.*\\.js|.*\\.json)(.*)$", "dest": "/index.html"},
+    {"src": "/(.*)", "dest": "/$1"}
   ]
 }
