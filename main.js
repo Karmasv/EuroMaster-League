@@ -1,12 +1,31 @@
 console.log('EuroMaster League cargado');
 
-// Navegación activa
+// Menú móvil
 document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
+    }
+    
+    // Cerrar menú al hacer click en un enlace
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+        });
+    });
+    
+    // Navegación activa
     const currentPath = window.location.pathname;
     const currentFile = currentPath.split('/').pop() || 'index.html';
     
     // Remover la clase nav-active de todos los enlaces
-    const navLinks = document.querySelectorAll('.nav-menu a');
     navLinks.forEach(link => {
         link.classList.remove('nav-active');
     });
