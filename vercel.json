@@ -59,7 +59,7 @@
       "dest": "/pages/match-detail.html"
     },
     {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml|woff|woff2|ttf|eot|svg))",
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|json|txt|xml))",
       "dest": "/$1"
     },
     {
