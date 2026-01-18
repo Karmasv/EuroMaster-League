@@ -102,14 +102,7 @@ for (const file of eventFiles) {
 client.on('error', console.error);
 process.on('unhandledRejection', console.error);
 
-// CONECTAR BOT PRIMERO - luego iniciar servidor
-console.log('🚀 Conectando bot a Discord...');
-console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
-console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
-console.log(`📊 Node.js versión: ${process.version}`);
-console.log(`🌐 Intentando conectar a Gateway de Discord...`);
-
-// Debug: eventos del cliente
+// Debug: eventos del cliente (ANTES de login)
 client.on('debug', info => {
     console.log(`[DEBUG] ${info}`);
 });
@@ -117,6 +110,21 @@ client.on('debug', info => {
 client.on('rateLimit', info => {
     console.log(`[RATELIMIT] ${JSON.stringify(info)}`);
 });
+
+client.on('invalidSession', () => {
+    console.log('[invalidSession] Sesión inválida, reintentando...');
+});
+
+client.on('shardReady', (id) => {
+    console.log(`[shardReady] Shard ${id} listo`);
+});
+
+// CONECTAR BOT PRIMERO - luego iniciar servidor
+console.log('🚀 Conectando bot a Discord...');
+console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
+console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
+console.log(`📊 Node.js versión: ${process.version}`);
+console.log(`🌐 Intentando conectar a Gateway de Discord...`);
 
 const loginPromise = client.login(process.env.DISCORD_TOKEN)
     .then(() => {
