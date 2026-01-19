@@ -163,9 +163,7 @@ server.on('error', (error) => {
 
 // Debug adicional - eventos de conexión
 client.on('debug', (info) => {
-    if (info.includes('heartbeat') || info.includes('connecting') || info.includes('identify') || info.includes('ready')) {
-        console.log(`[DISCORD DEBUG] ${info}`);
-    }
+    console.log(`[DISCORD DEBUG] ${info}`);
 });
 
 client.on('disconnect', (event) => {
@@ -175,4 +173,16 @@ client.on('disconnect', (event) => {
 client.on('reconnecting', () => {
     console.log('🔄 Discord reconectando...');
 });
+
+// Timeout de conexión - forzar error si no conecta en 30 segundos
+setTimeout(() => {
+    if (!client.user) {
+        console.error('❌ TIMEOUT: Bot no pudo conectarse en 30 segundos');
+        console.error('Posibles causas:');
+        console.error('  1. Render bloquea conexiones WebSocket');
+        console.error('  2. Token inválido o permissions insuficientes');
+        console.error('  3. Discord Gateway bloqueado por IP de Render');
+        console.error('  4. Intents insuficientes');
+    }
+}, 30000);
 
