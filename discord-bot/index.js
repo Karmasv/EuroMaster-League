@@ -130,29 +130,49 @@ console.log('🌐 Iniciando servidor HTTP...');
 
 const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ Servidor HTTP escuchando en puerto ${PORT}`);
-    console.log('🚀 Conectando bot a Discord...');
-    console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
-    console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
-    console.log(`📊 Node.js versión: ${process.version}`);
-    console.log(`🌐 Intentando conectar a Gateway de Discord...`);
+    
+    // Delay pequeño para asegurar que el servidor está listo
+    setTimeout(() => {
+        console.log('🚀 Conectando bot a Discord...');
+        console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
+        console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
+        console.log(`📊 Node.js versión: ${process.version}`);
+        console.log(`🌐 Gateway URL: ${process.env.DISCORD_GATEWAY || 'wss://gateway.discord.gg'}`);
 
-    // Conectar bot después de que el servidor esté listo
-    client.login(process.env.DISCORD_TOKEN)
-        .then(() => {
-            console.log('✅ Bot conectado exitosamente');
-        })
-        .catch(error => {
-            console.error('❌ Error en login:');
-            console.error('  Code:', error.code);
-            console.error('  Message:', error.message);
-            console.error('  Name:', error.name);
-            console.error('  HTTP Status:', error.httpStatus);
-            // No salimos, el servidor sigue corriendo para health checks
-        });
+        // Conectar bot después de que el servidor esté listo
+        client.login(process.env.DISCORD_TOKEN)
+            .then(() => {
+                console.log('✅ Bot conectado exitosamente');
+            })
+            .catch(error => {
+                console.error('❌ Error en login:');
+                console.error('  Code:', error.code);
+                console.error('  Message:', error.message);
+                console.error('  Name:', error.name);
+                console.error('  HTTP Status:', error.httpStatus);
+                console.error('  Full error:', JSON.stringify(error, null, 2));
+                // No salimos, el servidor sigue corriendo para health checks
+            });
+    }, 1000);
 });
 
 // Manejar errores del servidor
 server.on('error', (error) => {
     console.error('❌ Error del servidor HTTP:', error);
+});
+
+// Debug adicional - eventos de conexión
+client.on('debug', (info) => {
+    if (info.includes('heartbeat') || info.includes('connecting') || info.includes('identify') || info.includes('ready')) {
+        console.log(`[DISCORD DEBUG] ${info}`);
+    }
+});
+
+client.on('disconnect', (event) => {
+    console.log('❌ Discord disconnected:', JSON.stringify(event, null, 2));
+});
+
+client.on('reconnecting', () => {
+    console.log('🔄 Discord reconectando...');
 });
 
