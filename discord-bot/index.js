@@ -119,42 +119,35 @@ client.on('shardReady', (id) => {
     console.log(`[shardReady] Shard ${id} listo`);
 });
 
-// CONECTAR BOT PRIMERO - luego iniciar servidor
-console.log('🚀 Conectando bot a Discord...');
-console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
-console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
-console.log(`📊 Node.js versión: ${process.version}`);
-console.log(`🌐 Intentando conectar a Gateway de Discord...`);
+// INICIAR SERVIDOR HTTP PRIMERO - luego conectar bot
+// Esto es CRÍTICO para Render que hace port scan
+console.log('🌐 Iniciando servidor HTTP...');
 
-const loginPromise = client.login(process.env.DISCORD_TOKEN)
-    .then(() => {
-        console.log('✅ Bot conectado exitosamente');
-        return client;
-    })
-    .catch(error => {
-        console.error('❌ Error en login:');
-        console.error('  Code:', error.code);
-        console.error('  Message:', error.message);
-        console.error('  Name:', error.name);
-        console.error('  HTTP Status:', error.httpStatus);
-        throw error;
-    });
+const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Servidor HTTP escuchando en puerto ${PORT}`);
+    console.log('🚀 Conectando bot a Discord...');
+    console.log(`🔑 Token presente: ${process.env.DISCORD_TOKEN ? 'SÍ' : 'NO'}`);
+    console.log(`🔑 Longitud del token: ${process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.length : 0} caracteres`);
+    console.log(`📊 Node.js versión: ${process.version}`);
+    console.log(`🌐 Intentando conectar a Gateway de Discord...`);
 
-// Cuando el bot se conecta, iniciar servidor HTTP
-loginPromise
-    .then(() => {
-        console.log('🌐 Iniciando servidor HTTP...');
-        
-        // Iniciar servidor HTTP solo después de conectar el bot
-        app.listen(PORT, '0.0.0.0', () => {
-            console.log(`✅ Servidor HTTP escuchando en puerto ${PORT}`);
+    // Conectar bot después de que el servidor esté listo
+    client.login(process.env.DISCORD_TOKEN)
+        .then(() => {
+            console.log('✅ Bot conectado exitosamente');
+        })
+        .catch(error => {
+            console.error('❌ Error en login:');
+            console.error('  Code:', error.code);
+            console.error('  Message:', error.message);
+            console.error('  Name:', error.name);
+            console.error('  HTTP Status:', error.httpStatus);
+            // No salimos, el servidor sigue corriendo para health checks
         });
-    })
-    .catch(error => {
-        console.error('❌ Error fatal: El bot no pudo conectarse');
-        console.error('Esperando 10 segundos antes de salir...');
-        setTimeout(() => {
-            process.exit(1);
-        }, 10000);
-    });
+});
+
+// Manejar errores del servidor
+server.on('error', (error) => {
+    console.error('❌ Error del servidor HTTP:', error);
+});
 
