@@ -27,9 +27,14 @@ client.commands = new Collection();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Endpoint de health check
+// Endpoint de health check (CRÍTICO para Render)
 app.get('/health', (req, res) => {
-    res.json({ status: 'online', bot: client?.user?.username || 'Conectando...' });
+    res.status(200).send('OK');
+});
+
+// Endpoint raíz para health checks de Render
+app.get('/', (req, res) => {
+    res.status(200).send('Bot running');
 });
 
 // Cargar comandos
