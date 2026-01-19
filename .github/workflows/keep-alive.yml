@@ -1,0 +1,25 @@
+name: Keep Replit Alive
+
+on:
+  schedule:
+    # Cada 5 minutos - ajusta según necesidades
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    # Permite ejecución manual
+
+jobs:
+  ping-replit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Ping Replit
+        run: |
+          # Hacer ping a la URL del bot
+          curl -s -o /dev/null -w "%{http_code}" ${{ secrets.REPLIT_URL }} || echo "Ping failed"
+          
+      - name: Report Status
+        if: always()
+        run: |
+          echo "✅ Keep-alive ping executed at $(date)"
+          echo "URL: ${{ secrets.REPLIT_URL }}"
+
