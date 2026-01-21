@@ -12,16 +12,28 @@
 3. Busca y selecciona: `Karmasv/EuroMaster-League`
 
 ### Paso 3: Configurar variables de entorno
-En Railway Dashboard → Settings → Variables, añade:
+En Railway Dashboard → Settings → Variables, añade estas variables:
 
-```
-DISCORD_TOKEN=tu_token_discord_aqui (72 caracteres)
-GITHUB_TOKEN=tu_token_github_aqui (classic con repo scope)
-GITHUB_REPO=Karmasv/EuroMaster-League
-GITHUB_BRANCH=main
-WEB_API_URL=https://euromasterleague.vercel.app/api/data
-LOG_CHANNEL_ID=tu_id_de_canal_de_logs
-```
+#### ⭐ OBLIGATORIAS:
+
+| Variable | Valor |
+|----------|-------|
+| `DISCORD_TOKEN` | Tu token de Discord Bot (72 caracteres) |
+| `GITHUB_TOKEN` | Tu GitHub Token Classic con scope `repo` |
+| `GITHUB_REPO` | `Karmasv/EuroMaster-League` |
+| `GITHUB_BRANCH` | `main` |
+
+#### ⚙️ OPCIONALES:
+
+| Variable | Valor |
+|----------|-------|
+| `WEB_API_URL` | `https://euromasterleague.vercel.app/api/data` |
+| `LOG_CHANNEL_ID` | ID del canal de logs |
+
+#### 🔧 RAILWAY AUTO-CONFIGURADO:
+Las siguientes variables ya están configuradas en `railway.json`:
+- `PORT`: 8080 (detectado automáticamente)
+- `NODE_ENV`: production
 
 ### Paso 4: Deploy
 1. Click en **"Deploy"**

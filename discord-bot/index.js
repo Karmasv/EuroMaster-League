@@ -27,14 +27,18 @@ client.commands = new Collection();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Endpoint de health check (CRÍTICO para Render)
+// Endpoint de health check (CRÍTICO para Railway)
 app.get('/health', (req, res) => {
-    res.status(200).send('OK');
+    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Endpoint raíz para health checks de Render
+// Endpoint raíz para health checks de Railway y otros platforms
 app.get('/', (req, res) => {
-    res.status(200).send('Bot running');
+    res.status(200).json({ 
+        status: 'running',
+        bot: client.user ? client.user.tag : 'connecting...',
+        timestamp: new Date().toISOString()
+    });
 });
 
 // Cargar comandos
