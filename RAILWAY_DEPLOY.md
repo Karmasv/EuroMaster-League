@@ -28,7 +28,26 @@ En Railway Dashboard → Settings → Variables, añade estas variables:
 | Variable | Valor |
 |----------|-------|
 | `WEB_API_URL` | `https://euromasterleague.vercel.app/api/data` |
-| `LOG_CHANNEL_ID` | ID del canal de logs |
+| `LOG_CHANNEL_ID` | ID del canal de logs (legacy) |
+| `LOG_WEBHOOK_URL` | Webhook para recibir todos los logs en tu DM/canal |
+
+#### 🔗 Configurar Webhook para Logs en DM:
+
+Para recibir todos los logs directamente en tu Discord:
+
+1. Crea un canal nuevo en tu servidor (puede ser privado)
+2. Ve a **Configuración del canal → Integraciones → Webhooks**
+3. Crea un webhook nuevo
+4. Copia la URL del webhook
+5. Añádela como variable `LOG_WEBHOOK_URL` en Railway
+
+**Recibirás logs de:**
+- ✅ Inicio del bot
+- ✅ Comandos ejecutados
+- ✅ Acciones (fichajes, creación de equipos)
+- ✅ Resultados de partidos
+- ✅ Errores
+- ✅ Sincronizaciones de datos
 
 #### 🔧 RAILWAY AUTO-CONFIGURADO:
 Las siguientes variables ya están configuradas en `railway.json`:

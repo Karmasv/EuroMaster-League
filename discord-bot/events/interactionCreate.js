@@ -1,3 +1,5 @@
+const logger = require('../utils/logger');
+
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
@@ -12,8 +14,15 @@ module.exports = {
         }
         
         try {
-            // Log del comando usado
+            // Log del comando usado (consola + webhook)
             console.log(`📝 /${interaction.commandName} - @${interaction.user.tag} (${interaction.user.id})`);
+            
+            // Enviar a webhook
+            await logger.logCommand(
+                interaction.commandName,
+                interaction.user,
+                interaction.guild
+            );
             
             // Ejecutar comando
             await command.execute(interaction);
@@ -33,11 +42,12 @@ module.exports = {
                 await interaction.reply(errorMessage);
             }
             
-            // Log detallado
-            const logChannel = interaction.client.channels.cache.get(process.env.LOG_CHANNEL_ID);
-            if (logChannel) {
-                logChannel.send(`💥 **Error en comando**\n\`/${interaction.commandName}\`\nUsuario: <@${interaction.user.id}>\n\`\`\`${error.message}\`\`\``);
-            }
+            // Log de error al webhook
+            await logger.logError(
+                error,
+                `Comando: /${interaction.commandName}\nUsuario: ${interaction.user.tag} (${interaction.user.id})\nServidor: ${interaction.guild?.name || 'DM'}`
+            );
         }
     }
 };
+
