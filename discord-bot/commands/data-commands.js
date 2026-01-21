@@ -1,5 +1,5 @@
-const GitHubDB = require('../githubDB.js');
-const config = require('../config.js');
+const GitHubDB = require('../utils/githubDB');
+const config = require('../config');
 
 module.exports = {
   name: 'teams',
