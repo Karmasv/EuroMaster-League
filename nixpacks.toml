@@ -2,7 +2,7 @@
 nixpacksBranch = "main"
 
 [phases.build]
-buildCommand = "cd discord-bot && npm ci --prefer-offline --no-audit"
+buildCommand = "npm ci --prefer-offline --no-audit"
 
 [runtime]
   [runtime.healthcheck]
