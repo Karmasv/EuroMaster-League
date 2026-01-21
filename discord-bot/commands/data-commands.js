@@ -1,24 +1,55 @@
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const GitHubDB = require('../utils/githubDB');
-const config = require('../config');
 
 module.exports = {
-  name: 'teams',
-  description: 'Muestra los equipos de la liga',
+  data: new SlashCommandBuilder()
+    .setName('teams')
+    .setDescription('Muestra los equipos de la liga'),
+  
   async execute(interaction) {
     try {
       const db = new GitHubDB();
-      const teams = await db.get('teams');
+      const teams = db.getTeams();
       
       if (teams.length === 0) {
-        return await interaction.reply('No hay equipos registrados.');
+        return await interaction.reply({
+          embeds: [
+            new EmbedBuilder()
+              .setColor(0xFF9900)
+              .setTitle('⚠️ SIN EQUIPOS')
+              .setDescription('No hay equipos registrados en la liga')
+          ]
+        });
       }
       
-      const teamsList = teams.map(t => `• ${t.name} (${t.points || 0} pts)`).join('\n');
-      await interaction.reply(`**Equipos de la Liga:**\n${teamsList}`);
+      const embed = new EmbedBuilder()
+        .setColor(0x0066FF)
+        .setTitle('🏆 EQUIPOS DE LA LIGA')
+        .setDescription(`Total: ${teams.length} equipos`)
+        .setTimestamp();
+      
+      teams.forEach((team, index) => {
+        const points = (team.stats?.wins || 0) * 3 + (team.stats?.draws || 0);
+        embed.addFields({
+          name: `${index + 1}. ${team.name}`,
+          value: `📊 ${points} pts | ${team.stats?.wins || 0}G ${team.stats?.draws || 0}E ${team.stats?.losses || 0}P`,
+          inline: false
+        });
+      });
+      
+      await interaction.reply({ embeds: [embed] });
       
     } catch (error) {
       console.error('Error en comando teams:', error);
-      await interaction.reply('Error al obtener equipos.');
+      await interaction.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setColor(0xFF0000)
+            .setTitle('❌ ERROR')
+            .setDescription('Error al obtener equipos')
+        ]
+      });
     }
   }
 };
+
