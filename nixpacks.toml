@@ -5,7 +5,10 @@ nixpacksBranch = "main"
 buildCommand = "cd discord-bot && npm ci --prefer-offline --no-audit"
 
 [runtime]
-healthcheck = { port = 8080, path = "/health", timeout = 30 }
+  [runtime.healthcheck]
+  port = 8080
+  path = "/health"
+  timeout = 30
 
 [variables]
 NODE_ENV = "production"
