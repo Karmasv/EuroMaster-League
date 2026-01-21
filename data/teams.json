@@ -2,29 +2,58 @@
   {
     "id": 1,
     "name": "Real Madrid Ecuador",
+    "abbreviation": "RME",
     "city": "Quito",
+    "logoUrl": "https://example.com/rme.png",
+    "roleId": null,
+    "channelId": null,
+    "color": "#FFFFFF",
+    "managerId": "123456789",
+    "manager": "Admin#1234",
     "points": 6,
     "founded": "2026-01-01T00:00:00Z"
   },
   {
     "id": 2,
     "name": "Barcelona SC",
+    "abbreviation": "BSC",
     "city": "Guayaquil",
+    "logoUrl": "https://example.com/bsc.png",
+    "roleId": null,
+    "channelId": null,
+    "color": "#FB0909",
+    "managerId": "234567890",
+    "manager": "Manager#2345",
     "points": 4,
     "founded": "2026-01-01T00:00:00Z"
   },
   {
     "id": 3,
     "name": "Emelec Europa",
+    "abbreviation": "EME",
     "city": "Guayaquil",
+    "logoUrl": "https://example.com/eme.png",
+    "roleId": null,
+    "channelId": null,
+    "color": "#1C4E9C",
+    "managerId": "345678901",
+    "manager": "Manager#3456",
     "points": 2,
     "founded": "2026-01-01T00:00:00Z"
   },
   {
     "id": 4,
     "name": "LDU Internacional",
+    "abbreviation": "LDU",
     "city": "Quito",
+    "logoUrl": "https://example.com/ldu.png",
+    "roleId": null,
+    "channelId": null,
+    "color": "#C61E2E",
+    "managerId": "456789012",
+    "manager": "Manager#4567",
     "points": 3,
     "founded": "2026-01-01T00:00:00Z"
   }
 ]
+

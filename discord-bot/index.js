@@ -111,6 +111,119 @@ for (const file of eventFiles) {
 client.on('error', console.error);
 process.on('unhandledRejection', console.error);
 
+// ========== MANEJO DE BOTONES ==========
+const { EmbedBuilder } = require('discord.js');
+const TransferManager = require('./utils/transfers');
+const Database = require('./utils/database');
+
+client.on('interactionCreate', async (interaction) => {
+    // Manejar botones
+    if (interaction.isButton()) {
+        const customId = interaction.customId;
+
+        // Botones de transferencia
+        if (customId.startsWith('transfer_accept_')) {
+            const transferId = parseInt(customId.replace('transfer_accept_', ''));
+            
+            try {
+                const result = await TransferManager.acceptTransfer(transferId, interaction);
+                
+                if (result.success) {
+                    // Actualizar embed original
+                    const teams = Database.loadTeams();
+                    const team = teams.find(t => t.name === result.transfer.toTeam);
+                    const embed = new EmbedBuilder()
+                        .setColor(0x00FF88)
+                        .setTitle('✅ TRANSFERENCIA ACEPTADA')
+                        .setDescription(`**${result.transfer.playerName}** ahora es parte de **${result.transfer.toTeam}**`)
+                        .addFields(
+                            { name: '👤 Jugador', value: result.transfer.playerName, inline: true },
+                            { name: '🏆 Equipo', value: result.transfer.toTeam, inline: true },
+                            { name: '📊 Tag', value: `\`[${team?.abbreviation || '???'}]\``, inline: true },
+                            { name: '👨‍💼 Manager', value: result.transfer.manager, inline: true },
+                            { name: '📅 Fecha', value: new Date(result.transfer.date).toLocaleDateString('es-ES'), inline: true },
+                            { name: '✅ Aceptada por', value: interaction.user.tag, inline: true }
+                        )
+                        .setTimestamp();
+
+                    await interaction.update({ embeds: [embed], components: [] });
+                    
+                    // Notificar al manager
+                    console.log(`✅ Transferencia aceptada: ${result.transfer.playerName} -> ${result.transfer.toTeam}`);
+                } else {
+                    await interaction.update({ content: `❌ ${result.message}`, components: [] });
+                }
+            } catch (error) {
+                console.error('Error aceptando transferencia:', error);
+                await interaction.update({ content: '❌ Error al aceptar la transferencia', components: [] });
+            }
+        }
+        else if (customId.startsWith('transfer_reject_')) {
+            const transferId = parseInt(customId.replace('transfer_reject_', ''));
+            
+            try {
+                const result = await TransferManager.rejectTransfer(transferId, interaction);
+                
+                if (result.success) {
+                    const embed = new EmbedBuilder()
+                        .setColor(0xFF4444)
+                        .setTitle('❌ TRANSFERENCIA RECHAZADA')
+                        .setDescription(`**${result.transfer.playerName}** rechazó la oferta de **${result.transfer.toTeam}**`)
+                        .addFields(
+                            { name: '👤 Jugador', value: result.transfer.playerName, inline: true },
+                            { name: '🏆 Equipo', value: result.transfer.toTeam, inline: true },
+                            { name: '👨‍💼 Manager', value: result.transfer.manager, inline: true },
+                            { name: '📅 Fecha', value: new Date(result.transfer.date).toLocaleDateString('es-ES'), inline: true },
+                            { name: '❌ Rechazada por', value: interaction.user.tag, inline: true }
+                        )
+                        .setTimestamp();
+
+                    await interaction.update({ embeds: [embed], components: [] });
+                    
+                    console.log(`❌ Transferencia rechazada: ${result.transfer.playerName}`);
+                } else {
+                    await interaction.update({ content: `❌ ${result.message}`, components: [] });
+                }
+            } catch (error) {
+                console.error('Error rechazando transferencia:', error);
+                await interaction.update({ content: '❌ Error al rechazar la transferencia', components: [] });
+            }
+        }
+    }
+    
+    // Continuar con el manejo de comandos slash
+    if (!interaction.isChatInputCommand()) return;
+    
+    const command = interaction.client.commands.get(interaction.commandName);
+    
+    if (!command) {
+        console.error(`❌ Comando no encontrado: ${interaction.commandName}`);
+        return;
+    }
+    
+    try {
+        // Log del comando usado
+        console.log(`📝 /${interaction.commandName} - @${interaction.user.tag}`);
+        
+        // Ejecutar comando
+        await command.execute(interaction);
+        
+    } catch (error) {
+        console.error(`💥 Error en comando ${interaction.commandName}:`, error);
+        
+        const errorMessage = {
+            content: '❌ **Error ejecutando el comando**\nEl error ha sido reportado a los administradores.',
+            ephemeral: true
+        };
+        
+        if (interaction.replied || interaction.deferred) {
+            await interaction.followUp(errorMessage);
+        } else {
+            await interaction.reply(errorMessage);
+        }
+    }
+});
+
 // Debug: eventos del cliente (ANTES de login)
 client.on('debug', info => {
     console.log(`[DEBUG] ${info}`);

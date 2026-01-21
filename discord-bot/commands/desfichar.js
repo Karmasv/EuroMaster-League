@@ -1,95 +1,116 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const Database = require('../utils/database');
-const fs = require('fs');
-const path = require('path');
+const TransferManager = require('../utils/transfers');
+const EMLEmbeds = require('../utils/embeds');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('desfichar')
-        .setDescription('Desfichar un jugador (solo managers)')
+        .setDescription('Desvincular un jugador de un equipo')
         .addStringOption(option =>
             option.setName('jugador')
-                .setDescription('Nombre del jugador')
-                .setRequired(true)),
+                .setDescription('Nombre del jugador a desfichar')
+                .setRequired(true))
+        .addStringOption(option =>
+            option.setName('razon')
+                .setDescription('Motivo del desfichaje')
+                .setRequired(false)),
     
     async execute(interaction) {
         const jugadorNombre = interaction.options.getString('jugador');
+        const razon = interaction.options.getString('razon') || 'No especificada';
 
-        let players = Database.loadPlayers();
+        // Cargar jugadores
+        const players = Database.loadPlayers();
         const player = players.find(p => p.name.toLowerCase() === jugadorNombre.toLowerCase());
 
         if (!player) {
             return await interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor(0xFF0000)
-                        .setTitle('❌ JUGADOR NO ENCONTRADO')
-                        .setDescription(`El jugador "${jugadorNombre}" no existe`)
-                ],
+                embeds: [EMLEmbeds.createErrorEmbed(`❌ El jugador "${jugadorNombre}" no está registrado`)],
                 ephemeral: true
             });
         }
 
         if (!player.team) {
             return await interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor(0xFF9900)
-                        .setTitle('⚠️ JUGADOR SIN EQUIPO')
-                        .setDescription(`${jugadorNombre} no juega en ningún equipo`)
-                ],
+                embeds: [EMLEmbeds.createErrorEmbed(`⚠️ ${jugadorNombre} no tiene equipo`)],
                 ephemeral: true
             });
         }
+
+        // Verificar equipo
+        const teams = Database.loadTeams();
+        const team = teams.find(t => t.name.toLowerCase() === player.team.toLowerCase());
 
         // Verificar permisos
-        const teams = Database.loadTeams();
-        const team = teams.find(t => t.name === player.team);
+        const isManager = team && team.managerId === interaction.user.id;
+        const isAdmin = interaction.member.roles.cache.some(r => r.name.toLowerCase().includes('admin')) ||
+                       interaction.member.roles.cache.some(r => r.name.toLowerCase().includes('owner'));
 
-        if (team && team.managerId !== interaction.user.id && interaction.user.id !== process.env.INITIAL_OWNER_ID) {
+        if (!isManager && !isAdmin) {
             return await interaction.reply({
-                content: '❌ Solo el manager del equipo puede desfichar jugadores',
+                embeds: [EMLEmbeds.createErrorEmbed('❌ Solo el manager del equipo puede desfichar jugadores')],
                 ephemeral: true
             });
         }
 
-        const teamAnterior = player.team;
-        player.team = null;
-        Database.savePlayers(players);
-
-        // Registrar traspaso
-        const TRANSFERS_PATH = path.join(__dirname, '../../data/transfers.json');
-        let transfers = [];
         try {
-            if (fs.existsSync(TRANSFERS_PATH)) {
-                transfers = JSON.parse(fs.readFileSync(TRANSFERS_PATH, 'utf8'));
-            }
+            const equipoAnterior = player.team;
+
+            // Desvincular jugador
+            player.team = null;
+            player.leftAt = new Date().toISOString();
+            Database.savePlayers(players);
+
+            // Registrar en transfers
+            const transferResult = TransferManager.createTransfer({
+                playerName: player.name,
+                playerId: player.id?.toString(),
+                fromTeam: equipoAnterior,
+                toTeam: null,
+                manager: interaction.user.tag,
+                managerId: interaction.user.id,
+                reason: razon
+            });
+
+            const transfer = transferResult.transfer;
+
+            // Crear embed de confirmación
+            const embed = new EmbedBuilder()
+                .setColor(0xFF4444)
+                .setTitle('🦶 JUGADOR DESFICHADO')
+                .setDescription(`**${player.name}** ha sido desfichado de **${equipoAnterior}**`)
+                .addFields(
+                    { name: '👤 Jugador', value: player.name, inline: true },
+                    { name: '🏆 Equipo anterior', value: equipoAnterior, inline: true },
+                    { name: '👨‍💼 Manager', value: interaction.user.tag, inline: true },
+                    { name: '📝 Razón', value: razon, inline: true },
+                    { name: '📅 Fecha', value: new Date().toLocaleDateString('es-ES'), inline: true }
+                )
+                .setFooter({ text: 'EuroMaster League' })
+                .setTimestamp();
+
+            // Botón de confirmación
+            const buttons = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setLabel('Confirmar')
+                        .setStyle(ButtonStyle.Success)
+                        .setEmoji('✅')
+                        .setCustomId(`desfichar_confirm_${player.id}`)
+                );
+
+            await interaction.reply({ embeds: [embed], components: [buttons] });
+
+            console.log(`🦶 ${player.name} desfichado de ${equipoAnterior} por ${interaction.user.tag}`);
+
         } catch (error) {
-            console.error('Error leyendo transfers:', error);
+            console.error('Error desfichando:', error);
+            await interaction.reply({
+                embeds: [EMLEmbeds.createErrorEmbed(`❌ Error al desfichar: ${error.message}`)],
+                ephemeral: true
+            });
         }
-
-        transfers.unshift({
-            id: transfers.length + 1,
-            playerName: jugadorNombre,
-            fromTeam: teamAnterior,
-            toTeam: null,
-            date: new Date().toISOString(),
-            manager: interaction.user.tag,
-            type: 'salida'
-        });
-
-        fs.writeFileSync(TRANSFERS_PATH, JSON.stringify(transfers, null, 2), 'utf8');
-
-        const embed = new EmbedBuilder()
-            .setColor(0xe63946)
-            .setTitle('✅ JUGADOR DESFICHADO')
-            .addFields(
-                { name: '👤 Jugador', value: jugadorNombre, inline: true },
-                { name: '🏆 Equipo', value: teamAnterior, inline: true },
-                { name: '📅 Fecha', value: new Date().toLocaleDateString('es-ES'), inline: true }
-            )
-            .setTimestamp();
-        
-        await interaction.reply({ embeds: [embed] });
     }
 };
+
